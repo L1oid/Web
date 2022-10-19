@@ -1,6 +1,4 @@
 var body = document.getElementById('body');
-var mainpage = document.createElement('div');
-mainpage.id = 'mainPage';
 
 function startPage() {
     if(localStorage.getItem('AutoSellUserToken') == null){
@@ -16,41 +14,24 @@ function displayMainPage() {
         body.removeChild(document.getElementById('loginDiv'));
     }
 
-    /*BTN EXIt*/
+    var mainpage = document.createElement('div');
+    mainpage.id = 'mainPage';
+
     var btn_exit = document.createElement('button');
+    btn_exit.className = "ExitButton";
+
     btn_exit.textContent = 'Exit';
-    btn_exit.addEventListener("click", function() {
+    btn_exit.addEventListener("click", function(){
         localStorage.removeItem('AutoSellUserToken');
         body.removeChild(document.getElementById('mainPage'));
+        body.removeChild(document.getElementById('MainMenu'));
+        if(document.getElementById("productList") != null) body.removeChild(document.getElementById("productList"));
         startPage();
     });
+
     mainpage.appendChild(btn_exit);
-
-    /*INPUT*/
-    var inpProductName = document.createElement('input');
-    inpProductName.className = "inpProductName-displayMainPage WrapCenteredInlineBlock";
-    inpProductName.placeholder = "ProductName";
-    inpProductName.id = "ProductName";
-    var inpPrice = document.createElement('input');
-    inpPrice.className = "inpPrice-displayMainPage WrapCenteredInlineBlock";
-    inpPrice.placeholder = "Price";
-    inpPrice.id = "Price";
-    var inpDescription = document.createElement('input');
-    inpDescription.className = "inpDescription-displayMainPage WrapCenteredInlineBlock";
-    inpDescription.placeholder = "Description";
-    inpDescription.id = "Description";
-    var btnAdd = document.createElement('button');
-    btnAdd.className = "btnAdd-displayMainPage WrapCenteredInlineBlock";
-    btnAdd.textContent = 'Add';
-    btnAdd.type = 'submit';
-    mainpage.appendChild(inpProductName);
-    mainpage.appendChild(inpPrice);
-    mainpage.appendChild(inpDescription);
-    mainpage.appendChild(btnAdd);
-    btnAdd.addEventListener("click", addButtonClicked);
-
-    /*TABLE*/
     body.appendChild(mainpage);
+    body.appendChild(mainMenu());
     getProductList();
 }
 
@@ -58,6 +39,7 @@ function productListRender(response) {
     if(response == 'tokenError'){
         console.log("Error");
         localStorage.removeItem('AutoSellUserToken');
+        if(document.getElementById("productList") != null) body.removeChild(document.getElementById("productList"));
         setTimeout(startPage, 100);
         return;
     };
@@ -65,6 +47,42 @@ function productListRender(response) {
         console.log("Error");
         return;
     };
+    if(document.getElementById("productList") != null){
+        body.removeChild(document.getElementById("productList"));
+    }
+    var productListMenu = document.createElement('div');
+    productListMenu.id = 'productList';
+    productListMenu.className = 'productList';
+
+    var inpProductName = document.createElement('input');
+    inpProductName.className = "inpProductName-displayMainPage WrapCenteredInlineBlock";
+    inpProductName.placeholder = "ProductName";
+    inpProductName.id = "ProductName";
+
+    var inpPrice = document.createElement('input');
+    inpPrice.className = "inpPrice-displayMainPage WrapCenteredInlineBlock";
+    inpPrice.placeholder = "Price";
+    inpPrice.id = "Price";
+
+    var inpDescription = document.createElement('input');
+    inpDescription.className = "inpDescription-displayMainPage WrapCenteredInlineBlock";
+    inpDescription.placeholder = "Description";
+    inpDescription.id = "Description";
+
+    var btnAdd = document.createElement('button');
+    btnAdd.className = "btnAdd-displayMainPage WrapCenteredInlineBlock";
+    btnAdd.textContent = 'Add';
+    btnAdd.type = 'submit';
+    btnAdd.addEventListener("click", addButtonClicked);
+
+    var divAdd = document.createElement('div');
+    divAdd.className = 'productListAdd';
+
+    divAdd.appendChild(inpProductName);
+    divAdd.appendChild(inpPrice);
+    divAdd.appendChild(inpDescription);
+    divAdd.appendChild(btnAdd);
+
     var table = document.createElement('table');
     table.className = "table-displayMainPage WrapCenteredInlineBlock";
     var th = document.createElement('tr');
@@ -100,10 +118,15 @@ function productListRender(response) {
         tr.appendChild(td4);
         table.appendChild(tr);
     });
-    mainpage.appendChild(table);
+    productListMenu.appendChild(divAdd);
+    productListMenu.appendChild(table);
+    body.appendChild(productListMenu);
 }
 
 function getProductList(){
+    if(localStorage.getItem('AutoSellUserToken') == null || localStorage.getItem('AutoSellUserToken') == undefined){
+        return "tokenError";
+    }
     var xhr = new XMLHttpRequest();
     var flagAsync = false;
     xhr.open("GET", "api/getProducts", flagAsync);
@@ -122,6 +145,37 @@ function getProductList(){
         } 
     }
     xhr.send();
+}
+
+function mainMenu(){
+    var divMainMenu = document.createElement('div');
+    divMainMenu.id = "MainMenu";
+    divMainMenu.className = "mainMenu";
+
+    var divListMenu = document.createElement('div');
+    divListMenu.id = "ListMenu";
+    divListMenu.className = "ListMenu";
+    
+    var header = document.createElement('p');
+    header.id = "MenuHeader";
+    header.className = "MenuHeader";
+
+    var str = "Привет, ";
+
+        {
+            var login = JSON.parse(localStorage.getItem('AutoSellUserToken'));
+            login = login.payload;
+            str+=login;
+        }
+
+
+    header.innerText = str;
+
+    divListMenu.appendChild(header);
+
+    divMainMenu.appendChild(divListMenu);    
+
+    return divMainMenu;
 }
 
 function loginForm() {
@@ -284,7 +338,7 @@ function addButtonClicked() {
         } else {
             var response = JSON.parse(xhr.responseText);
             console.log(response);
-            setTimeout(startPage, 0);
+            setTimeout(getProductList, 0);
         }
     }
     xhr.send(JSON.stringify(product));
