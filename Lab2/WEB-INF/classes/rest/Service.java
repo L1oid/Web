@@ -109,24 +109,31 @@ public class Service {
   @Path("/addProduct")
   @Consumes("application/json")
   @Produces("application/json")
-  public Response addProduct(String product) {
+  public Response addProduct(@HeaderParam("User-token") String userToken, String product) {
     Jsonb jsonb = JsonbBuilder.create();
     Product newProduct;
+    Token token;
     String resultJSON = "undefinedError";
     try {  
         try {
+          token = jsonb.fromJson(userToken, new Token(){}.getClass().getGenericSuperclass());
           newProduct = jsonb.fromJson(product, new Product(){}.getClass().getGenericSuperclass());
         }
         catch (Exception e) {
           resultJSON = "Error while JSON transforming.";
           throw new Exception("Error while JSON transforming.");  
         }
-        try{
+        Boolean usrTrue = null;
+        if(Token.verifyToken(token)){
+          try{
           DataBase.initDataBase();
           DataBase.addRow(newProduct.getProductName(), newProduct.getPrice(), newProduct.getDescription());
-          resultJSON = "addRow_status_ok";
+          resultJSON = "row_added";
         }catch (java.sql.SQLException sqle){resultJSON = "addRow_status_error";}
         catch (Exception ex){resultJSON ="addRow_status_error";};
+        } else {
+          resultJSON = "tokenError";
+        }
     }
     catch (JsonbException e) {
       return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             

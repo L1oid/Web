@@ -306,7 +306,20 @@ function addButtonClicked() {
         } else {
             var response = JSON.parse(xhr.responseText);
             console.log(response);
-            setTimeout(getProductList, 0);
+            if(response == 'row_added'){
+                setTimeout(getProductList, 0);
+                return;
+            }
+
+            if(response == "tokenError"){
+
+                alert("Ошибка авторизации! Выполните повторный вход!");
+                localStorage.removeItem('WFSAppUserToken');
+                setTimeout(startPage, 0);
+                return;
+            }else{
+                alert("Неизвестная ошибка. Попробуйте ещё раз!");
+            }
         }
     }
     xhr.send(JSON.stringify(product));
