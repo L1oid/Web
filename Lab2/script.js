@@ -92,14 +92,16 @@ function productListRender(response) {
     tdh3.innerText = "Price";
     var tdh4 = document.createElement('th');
     tdh4.innerText = "Description";
+    var tdh5 = document.createElement('th');
 
     th.appendChild(tdh1);
     th.appendChild(tdh2);
     th.appendChild(tdh3);
     th.appendChild(tdh4);
+    th.appendChild(tdh5);
     table.appendChild(th);
 
-    response.forEach(function(item, i, arr){
+    response.forEach(function(item){
         var tr = document.createElement('tr');
         var td1 = document.createElement('td');
         td1.innerText = item.id;
@@ -108,12 +110,22 @@ function productListRender(response) {
         var td3 = document.createElement('td');
         td3.innerText = item.price;
         var td4 = document.createElement('td');
-        td4.innerText = item.description;      
+        td4.innerText = item.description;
+        var td5 = document.createElement('td');
+        var currentButton = document.createElement('button');
+        currentButton.className = "currentButtonDelete";
+        currentButton.textContent = 'Delete';
+        currentButton.type = 'submit';
+        currentButton.value = item.id;
+        currentButton.addEventListener("click", deleteButtonClicked);
+        td5.appendChild(currentButton);
+
 
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
+        tr.appendChild(td5);
         table.appendChild(tr);
     });
     productListMenu.appendChild(divAdd);
@@ -121,7 +133,39 @@ function productListRender(response) {
     body.appendChild(productListMenu);
 }
 
-function getProductList(){
+function deleteButtonClicked() {
+    var deleteButtonValue = this.value;
+    console.log(deleteButtonValue);
+    var xhr = new XMLHttpRequest();
+    var flagAsync = true;
+    xhr.open("DELETE", "api/deleteProduct", flagAsync);
+    xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
+    xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
+    xhr.setRequestHeader('Delete-row', parseInt(deleteButtonValue));
+    xhr.onreadystatechange = function() {
+        if (this.readyState != 4) return;
+        if (xhr.status !== 200) {  
+            console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
+            return "RequestError";
+        } 
+        else { 
+            var response = JSON.parse(xhr.responseText);
+            if(response == 'row_deleted'){
+                console.log(response)
+                setTimeout(getProductList, 0);
+                return;
+            }
+            if(response == "tokenError"){
+                localStorage.removeItem('AutoSellUserToken');
+                setTimeout(startPage, 0);
+                return;
+            }
+        } 
+    }
+    xhr.send();
+}
+
+function getProductList() {
     if(localStorage.getItem('AutoSellUserToken') == null || localStorage.getItem('AutoSellUserToken') == undefined){
         return "tokenError";
     }
@@ -314,7 +358,7 @@ function addButtonClicked() {
             if(response == "tokenError"){
 
                 alert("Ошибка авторизации! Выполните повторный вход!");
-                localStorage.removeItem('WFSAppUserToken');
+                localStorage.removeItem('AutoSellUserToken');
                 setTimeout(startPage, 0);
                 return;
             }else{

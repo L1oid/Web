@@ -3,6 +3,7 @@ import jakarta.ws.rs.Path;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.DELETE;
 
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Consumes;
@@ -172,6 +173,45 @@ public class Service {
         catch(Exception e){};
       }else{
         resultJSON = "tokenError";
+      }
+
+    }catch (JsonbException e) {
+      return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
+    }
+    catch (Exception e) {
+      return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
+    }    
+    return Response.ok(resultJSON).build(); 
+  }
+
+  @DELETE
+  @Path("/deleteProduct")
+  @Consumes("application/json")
+  @Produces("application/json")
+  public Response deleteProducts(@HeaderParam("User-token") String userToken,@HeaderParam("Delete-row") int toDelete){
+    Token token;
+    Jsonb jsonb = JsonbBuilder.create();
+    String resultJSON = jsonb.toJson("undefinedError");
+    try{
+
+      try{
+        token = jsonb.fromJson(userToken, new Token(){}.getClass().getGenericSuperclass());
+      }catch (Exception e) {
+        resultJSON = "Error while JSON transforming.";
+        throw new Exception("Error while JSON transforming.");  
+      }
+
+      Boolean usrTrue = null;
+
+      if(Token.verifyToken(token)){
+        try{
+          DataBase.initDataBase();
+          DataBase.deleteRow(toDelete);
+          resultJSON = jsonb.toJson("row_deleted");
+        } catch(SQLException e){}
+        catch(Exception e){};
+      }else{
+        resultJSON = jsonb.toJson("tokenError");
       }
 
     }catch (JsonbException e) {

@@ -73,19 +73,12 @@ public class DataBase {
         preparedStatement.close();
     }
 
-    public static void deleteRows(ArrayList<String> to_delete) throws SQLException, SQLTimeoutException{
+    public static void deleteRow(int to_delete) throws SQLException, SQLTimeoutException{
         String sqlDelete = "DELETE FROM products WHERE id = (?)";
-        if(to_delete != null){
-            PreparedStatement preparedStatement = conn.prepareStatement(sqlDelete);
-            for(String to_delete_row: to_delete){
-
-                preparedStatement.setString(1, to_delete_row);
-
-                preparedStatement.executeUpdate();
-
-            }
-            preparedStatement.close();
-        }
+        PreparedStatement preparedStatement = conn.prepareStatement(sqlDelete);
+        preparedStatement.setString(1, String.valueOf(to_delete));
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 
     public static ArrayList<Product> selectProducts() throws SQLException, SQLTimeoutException{
