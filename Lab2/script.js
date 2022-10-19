@@ -24,14 +24,12 @@ function displayMainPage() {
     btn_exit.addEventListener("click", function(){
         localStorage.removeItem('AutoSellUserToken');
         body.removeChild(document.getElementById('mainPage'));
-        body.removeChild(document.getElementById('MainMenu'));
         if(document.getElementById("productList") != null) body.removeChild(document.getElementById("productList"));
         startPage();
     });
 
     mainpage.appendChild(btn_exit);
     body.appendChild(mainpage);
-    body.appendChild(mainMenu());
     getProductList();
 }
 
@@ -145,37 +143,6 @@ function getProductList(){
         } 
     }
     xhr.send();
-}
-
-function mainMenu(){
-    var divMainMenu = document.createElement('div');
-    divMainMenu.id = "MainMenu";
-    divMainMenu.className = "mainMenu";
-
-    var divListMenu = document.createElement('div');
-    divListMenu.id = "ListMenu";
-    divListMenu.className = "ListMenu";
-    
-    var header = document.createElement('p');
-    header.id = "MenuHeader";
-    header.className = "MenuHeader";
-
-    var str = "Привет, ";
-
-        {
-            var login = JSON.parse(localStorage.getItem('AutoSellUserToken'));
-            login = login.payload;
-            str+=login;
-        }
-
-
-    header.innerText = str;
-
-    divListMenu.appendChild(header);
-
-    divMainMenu.appendChild(divListMenu);    
-
-    return divMainMenu;
 }
 
 function loginForm() {
@@ -331,6 +298,7 @@ function addButtonClicked() {
     var flagAsync = true;
     xhr.open("POST", "api/addProduct", flagAsync);
     xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
+    xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
     xhr.onreadystatechange = function() {
         if (this.readyState != 4) return;
         if (xhr.status !== 200) {  
