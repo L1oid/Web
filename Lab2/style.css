@@ -38,13 +38,21 @@ body {
     flex: auto;
     margin: 0 auto;
     justify-content: space-around;
+    vertical-align: bottom;
+}
+
+table, th, td, tr {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 10px;
+    gap: 12px;
 }
 
 .table-displayMainPage {
-    scale: 2.0;
+    scale: 1.0;
     position: fixed;
     top: 10%;
-    left: 4.5%;
+    left: 0.5%;
 }
 
 .inpProductName-displayMainPage {
@@ -52,24 +60,27 @@ body {
     position: fixed;
     top: 5%;
     left: 0.4%;
+    width: 5.0%;
 }
 
 .inpPrice-displayMainPage {
     scale: 1.0;
     position: fixed;
     top: 5%;
-    left: 10.4%;
+    left: 6.4%;
+    width: 5.0%;
 }
 
 .inpDescription-displayMainPage {
     scale: 1.0;
     position: fixed;
     top: 5%;
-    left: 20.4%;
+    left: 12.4%;
+    width: 5.0%;
 }
 
 .btnAdd-displayMainPage {
     position: fixed;
     top: 5%;
-    left: 30.4%;
+    left: 18.4%;
 }

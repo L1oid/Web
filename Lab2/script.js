@@ -1,22 +1,22 @@
 var body = document.getElementById('body');
+var mainpage = document.createElement('div');
+mainpage.id = 'mainPage';
 
 function startPage() {
-    if (localStorage.getItem('AutoSellUserToken') == null || checkUserToken() == false) {
+    if(localStorage.getItem('AutoSellUserToken') == null){
         loginForm();
+        return;
     }
-    else {
-        displayMainPage();
-    }
+
+    displayMainPage();
 }
 
 function displayMainPage() {
     if (document.getElementById('loginDiv') != null) {
         body.removeChild(document.getElementById('loginDiv'));
     }
-    var mainpage = document.createElement('div');
-    mainpage.id = 'mainPage';
 
-    /*BTN INPUT*/
+    /*BTN EXIt*/
     var btn_exit = document.createElement('button');
     btn_exit.textContent = 'Exit';
     btn_exit.addEventListener("click", function() {
@@ -47,29 +47,81 @@ function displayMainPage() {
     mainpage.appendChild(inpPrice);
     mainpage.appendChild(inpDescription);
     mainpage.appendChild(btnAdd);
+    btnAdd.addEventListener("click", addButtonClicked);
 
     /*TABLE*/
+    body.appendChild(mainpage);
+    getProductList();
+}
+
+function productListRender(response) {
+    if(response == 'tokenError'){
+        console.log("Error");
+        localStorage.removeItem('AutoSellUserToken');
+        setTimeout(startPage, 100);
+        return;
+    };
+    if(response == 'RequestError'){
+        console.log("Error");
+        return;
+    };
     var table = document.createElement('table');
     table.className = "table-displayMainPage WrapCenteredInlineBlock";
-    var thead = document.createElement('thead');
-    var tbody = document.createElement('tbody');
-    table.appendChild(thead);
-    table.appendChild(tbody);
+    var th = document.createElement('tr');
+    var tdh1 = document.createElement('th');
+    tdh1.innerText = "ID";
+    var tdh2 = document.createElement('th');
+    tdh2.innerText = "ProductName";
+    var tdh3 = document.createElement('th');
+    tdh3.innerText = "Price";
+    var tdh4 = document.createElement('th');
+    tdh4.innerText = "Description";
+
+    th.appendChild(tdh1);
+    th.appendChild(tdh2);
+    th.appendChild(tdh3);
+    th.appendChild(tdh4);
+    table.appendChild(th);
+
+    response.forEach(function(item, i, arr){
+        var tr = document.createElement('tr');
+        var td1 = document.createElement('td');
+        td1.innerText = item.id;
+        var td2 = document.createElement('td');
+        td2.innerText = item.productName;
+        var td3 = document.createElement('td');
+        td3.innerText = item.price;
+        var td4 = document.createElement('td');
+        td4.innerText = item.description;      
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        table.appendChild(tr);
+    });
     mainpage.appendChild(table);
-    var row_1 = document.createElement('tr');
-    var heading_1 = document.createElement('th');
-    heading_1.innerHTML = "Name";
-    var heading_2 = document.createElement('th');
-    heading_2.innerHTML = "Price";
-    var heading_3 = document.createElement('th');
-    heading_3.innerHTML = "Description";
-    row_1.appendChild(heading_1);
-    row_1.appendChild(heading_2);
-    row_1.appendChild(heading_3);
-    thead.appendChild(row_1);
-    
-    body.appendChild(mainpage);
-    btnAdd.addEventListener("click", addButtonClicked);
+}
+
+function getProductList(){
+    var xhr = new XMLHttpRequest();
+    var flagAsync = false;
+    xhr.open("GET", "api/getProducts", flagAsync);
+    xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
+    xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
+    xhr.onreadystatechange = function() {
+        if (this.readyState != 4) return;
+        if (xhr.status !== 200) {  
+            console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
+            return "RequestError";
+        } 
+        else { 
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);  
+            productListRender(response);
+        } 
+    }
+    xhr.send();
 }
 
 function loginForm() {
@@ -232,6 +284,7 @@ function addButtonClicked() {
         } else {
             var response = JSON.parse(xhr.responseText);
             console.log(response);
+            setTimeout(startPage, 0);
         }
     }
     xhr.send(JSON.stringify(product));
@@ -258,7 +311,7 @@ function authQuerry(username, password) {
     }
     console.log(authUser);
     var flagAsync = true;
-    xhr.open("POST", "api/checkUser", flagAsync);
+    xhr.open("POST", "api/auth", flagAsync);
     xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
     xhr.onreadystatechange = function() {
         if (this.readyState != 4) return;
@@ -296,28 +349,6 @@ function authLogic(response) {
     }
 }
 
-function checkUserToken() {
-    var xhr = new XMLHttpRequest();
-    var flagAsync = true;
-    xhr.open("POST", "api/checkUserToken", flagAsync);
-    xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
-    xhr.onreadystatechange = function() {
-        if (this.readyState != 4) return;
-        if (xhr.status !== 200) {  
-            console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
-        } else { 
-            var response = JSON.parse(xhr.responseText);
-            if(response == 'true') return true;
-            return false;
-        } 
-    }
-    var token = {
-        crypto: JSON.parse(localStorage.getItem('AutoSellUserToken')).crypto,
-        payload: JSON.parse(localStorage.getItem('AutoSellUserToken')).payload
-    }
-    xhr.send(JSON.stringify(token));
-}
-
 function registerButtonClicked() {
     if ((document.getElementById('new_login').value == '' || document.getElementById('new_password').value == '' || document.getElementById('new_email').value == '') && document.getElementById('errRegister') == null) {
         var errP = document.createElement('p');
@@ -337,7 +368,7 @@ function registerQuery(username, password, email) {
     };
     var xhr = new XMLHttpRequest();
     var flagAsync = true;
-    var uri = "./api/createUser";
+    var uri = "./api/user";
     xhr.open("POST", uri, flagAsync)
     xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
     xhr.onreadystatechange = function() {
