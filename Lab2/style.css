@@ -39,3 +39,37 @@ body {
     margin: 0 auto;
     justify-content: space-around;
 }
+
+.table-displayMainPage {
+    scale: 2.0;
+    position: fixed;
+    top: 10%;
+    left: 4.5%;
+}
+
+.inpProductName-displayMainPage {
+    scale: 1.0;
+    position: fixed;
+    top: 5%;
+    left: 0.4%;
+}
+
+.inpPrice-displayMainPage {
+    scale: 1.0;
+    position: fixed;
+    top: 5%;
+    left: 10.4%;
+}
+
+.inpDescription-displayMainPage {
+    scale: 1.0;
+    position: fixed;
+    top: 5%;
+    left: 20.4%;
+}
+
+.btnAdd-displayMainPage {
+    position: fixed;
+    top: 5%;
+    left: 30.4%;
+}

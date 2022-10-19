@@ -44,7 +44,7 @@ public class Service {
 
       try{
 
-        DataBase db = DataBase.getInstance();
+        DataBase.initDataBase();
         usrTrue = DataBase.isUserCorrect(user.getLogin(), user.getPassword());
 
       }catch (java.sql.SQLException sqle){sqle.printStackTrace();}
@@ -121,7 +121,7 @@ public class Service {
         try{
 
           Boolean userCreated = false;
-          DataBase db = DataBase.getInstance();
+          DataBase.initDataBase();
           userCreated = DataBase.createUser(newUser.getLogin(), newUser.getPassword(), newUser.getEmail());
           if(userCreated == true) resultJSON = "createUser_Ok_status";
           else if (userCreated == false) resultJSON = "userIsExistStatus";
@@ -136,5 +136,46 @@ public class Service {
       return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
     }    
     return Response.ok(jsonb.toJson(resultJSON)).build();  
-  } 
+  }
+
+  @POST
+  @Path("/addProduct")
+  @Consumes("application/json")
+  @Produces("application/json")
+  public Response addProduct(String product) {
+    Jsonb jsonb = JsonbBuilder.create();
+    Product newProduct;
+    String resultJSON = "undefinedError";
+    try {  
+        try {
+          newProduct = jsonb.fromJson(product, new Product(){}.getClass().getGenericSuperclass());
+        }
+        catch (Exception e) {
+          resultJSON = "Error while JSON transforming.";
+          throw new Exception("Error while JSON transforming.");  
+        }
+        try{
+          DataBase.initDataBase();
+          DataBase.addRow(newProduct.getProductName(), newProduct.getPrice(), newProduct.getDescription());
+          resultJSON = "addRow_status_ok";
+        }catch (java.sql.SQLException sqle){resultJSON = "addRow_status_error";}
+        catch (Exception ex){resultJSON ="addRow_status_error";};
+    }
+    catch (JsonbException e) {
+      return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
+    }
+    catch (Exception e) {
+      return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
+    }    
+    return Response.ok(jsonb.toJson(resultJSON)).build();
+  }
+
+  @GET
+  @Path("/getProducts")
+  @Consumes("application/json")
+  @Produces("application/json")
+  public Response getProducts() {
+    DataBase.initDataBase();
+    
+  }
 }

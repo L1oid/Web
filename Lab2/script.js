@@ -15,6 +15,8 @@ function displayMainPage() {
     }
     var mainpage = document.createElement('div');
     mainpage.id = 'mainPage';
+
+    /*BTN INPUT*/
     var btn_exit = document.createElement('button');
     btn_exit.textContent = 'Exit';
     btn_exit.addEventListener("click", function() {
@@ -22,9 +24,52 @@ function displayMainPage() {
         body.removeChild(document.getElementById('mainPage'));
         startPage();
     });
-
     mainpage.appendChild(btn_exit);
+
+    /*INPUT*/
+    var inpProductName = document.createElement('input');
+    inpProductName.className = "inpProductName-displayMainPage WrapCenteredInlineBlock";
+    inpProductName.placeholder = "ProductName";
+    inpProductName.id = "ProductName";
+    var inpPrice = document.createElement('input');
+    inpPrice.className = "inpPrice-displayMainPage WrapCenteredInlineBlock";
+    inpPrice.placeholder = "Price";
+    inpPrice.id = "Price";
+    var inpDescription = document.createElement('input');
+    inpDescription.className = "inpDescription-displayMainPage WrapCenteredInlineBlock";
+    inpDescription.placeholder = "Description";
+    inpDescription.id = "Description";
+    var btnAdd = document.createElement('button');
+    btnAdd.className = "btnAdd-displayMainPage WrapCenteredInlineBlock";
+    btnAdd.textContent = 'Add';
+    btnAdd.type = 'submit';
+    mainpage.appendChild(inpProductName);
+    mainpage.appendChild(inpPrice);
+    mainpage.appendChild(inpDescription);
+    mainpage.appendChild(btnAdd);
+
+    /*TABLE*/
+    var table = document.createElement('table');
+    table.className = "table-displayMainPage WrapCenteredInlineBlock";
+    var thead = document.createElement('thead');
+    var tbody = document.createElement('tbody');
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    mainpage.appendChild(table);
+    var row_1 = document.createElement('tr');
+    var heading_1 = document.createElement('th');
+    heading_1.innerHTML = "Name";
+    var heading_2 = document.createElement('th');
+    heading_2.innerHTML = "Price";
+    var heading_3 = document.createElement('th');
+    heading_3.innerHTML = "Description";
+    row_1.appendChild(heading_1);
+    row_1.appendChild(heading_2);
+    row_1.appendChild(heading_3);
+    thead.appendChild(row_1);
+    
     body.appendChild(mainpage);
+    btnAdd.addEventListener("click", addButtonClicked);
 }
 
 function loginForm() {
@@ -166,6 +211,32 @@ function registerPageDisplay() {
         }
     });
 }
+function addButtonClicked() {
+    var xhr = new XMLHttpRequest();
+    var name = document.getElementById('ProductName').value;
+    var price = document.getElementById('Price').value;
+    var description = document.getElementById('Description').value;
+    var product = {
+        productName: name,
+        price: parseInt(price),
+        description: description
+    }
+    console.log(product);
+    var flagAsync = true;
+    xhr.open("POST", "api/addProduct", flagAsync);
+    xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
+    xhr.onreadystatechange = function() {
+        if (this.readyState != 4) return;
+        if (xhr.status !== 200) {  
+            console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
+        } else {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);
+        }
+    }
+    xhr.send(JSON.stringify(product));
+
+}
 
 function loginButtonClicked() {
     if ((document.getElementById('login').value == '' || document.getElementById('password').value == '') && document.getElementById('errLogin') == null) {
@@ -185,6 +256,7 @@ function authQuerry(username, password) {
         login: username,
         password: password
     }
+    console.log(authUser);
     var flagAsync = true;
     xhr.open("POST", "api/checkUser", flagAsync);
     xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
