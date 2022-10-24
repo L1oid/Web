@@ -17,7 +17,7 @@ var pageMain = (function() {
             localStorage.removeItem('AutoSellUserToken');
             body.removeChild(document.getElementById('mainPage'));
             if(document.getElementById("productList") != null) body.removeChild(document.getElementById("productList"));
-            startPage();
+            _render();
         });
     
         mainpage.appendChild(btn_exit);
@@ -319,6 +319,7 @@ var pageMain = (function() {
             }
         });
     }
+    
     function addButtonClicked() {
         var xhr = new XMLHttpRequest();
         var name = document.getElementById('ProductName').value;
@@ -407,7 +408,7 @@ var pageMain = (function() {
                 errP.innerText = 'Logined! Please, wait for pesponse...';
                 document.getElementById('loginDiv').appendChild(errP);
             }
-            startPage();
+            _render();
             return;
         }
         if (document.getElementById('errLogin') == null) {

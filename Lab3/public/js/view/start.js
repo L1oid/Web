@@ -1,4 +1,4 @@
-window.onload = function() {   
+window.onload = function() {
     var body = document.getElementById('body');        
-     pageMain.render(body);
-  };  
+    pageMain.render(body);
+};  
