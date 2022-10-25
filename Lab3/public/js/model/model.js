@@ -12,6 +12,9 @@ var model = (function() {
             if (this.readyState != 4) return;
             if (xhr.status !== 200) {  
                 console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
+                var response = JSON.parse(xhr.responseText);
+                console.log(response);
+                callback(response);
             } else { 
                 var response = JSON.parse(xhr.responseText);
                 console.log(response);
@@ -29,12 +32,15 @@ var model = (function() {
         };
         var xhr = new XMLHttpRequest();
         var flagAsync = true;
-        xhr.open("POST", "/api/register", flagAsync)
+        xhr.open("POST", "api/register", flagAsync)
         xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState != 4) return;
             if (xhr.status !== 200) {
                 console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
+                var response = JSON.parse(xhr.responseText);
+                console.log(response);
+                callback(response);
             } else {
                 var response = JSON.parse(xhr.responseText);
                 console.log(response);

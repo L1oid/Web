@@ -59,8 +59,6 @@ public class Service {
         resultJSON = "false";
       }
 
-      
-
     }catch (JsonbException e) {
       return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
     }
@@ -87,15 +85,13 @@ public class Service {
           throw new Exception("Error while JSON transforming.");  
         }
         try{
-
           Boolean userCreated = false;
           DataBase.initDataBase();
           userCreated = DataBase.createUser(newUser.getLogin(), newUser.getPassword(), newUser.getEmail());
           if(userCreated == true) resultJSON = "createUser_Ok_status";
           else if (userCreated == false) resultJSON = "userIsExistStatus";
-          
-        }catch (java.sql.SQLException sqle){resultJSON = "userIsExistStatus";}
-        catch (Exception ex){resultJSON ="userIsExistStatus";};
+        }catch (java.sql.SQLException sqle){resultJSON = "SQL Exception";}
+        catch (Exception ex){resultJSON = "Exception";};
     }
     catch (JsonbException e) {
       return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
@@ -208,8 +204,8 @@ public class Service {
           DataBase.initDataBase();
           DataBase.deleteRow(toDelete);
           resultJSON = jsonb.toJson("row_deleted");
-        } catch(SQLException e){}
-        catch(Exception e){};
+        } catch(SQLException e){resultJSON = "deleteRow_status_error";}
+        catch(Exception e){resultJSON = "deleteRow_status_error";};
       }else{
         resultJSON = jsonb.toJson("tokenError");
       }

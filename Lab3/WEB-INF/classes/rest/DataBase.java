@@ -9,22 +9,26 @@ public class DataBase {
     private static DataBase instance;
     private static Connection conn = null;
     
-    private DataBase() throws SQLException, SQLTimeoutException{
-        try{Class.forName("com.mysql.cj.jdbc.Driver");} catch(Exception ex){}
-        try{conn = getConnection();}catch (Exception ex){};
+    private DataBase() throws SQLException, SQLTimeoutException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch(Exception ex) {}
+        try { 
+            conn = getConnection();
+        }catch (Exception ex) {};
 	}
 
-    public static DataBase initDataBase() throws SQLException, SQLTimeoutException, Exception{
-        if(instance == null){
+    public static DataBase initDataBase() throws SQLException, SQLTimeoutException, Exception {
+        if(instance == null) {
             instance = new DataBase();
         }
-        if(conn == null || conn.isValid(1) == false || conn.isClosed() == true){
+        if(conn == null || conn.isValid(1) == false || conn.isClosed() == true) {
             conn = getConnection();
         }
         return instance;
     }
 
-    private static Connection getConnection() throws SQLException, SQLTimeoutException{
+    private static Connection getConnection() throws SQLException, SQLTimeoutException {
         String url = "jdbc:mysql://localhost:3306/web?useSSL=false&useUnicode=yes&characterEncoding=utf8";
     	String username = "root";
     	String password = "3cUUa7T9P9si";
@@ -32,26 +36,41 @@ public class DataBase {
     	return DriverManager.getConnection(url, username, password);
     };
 
-    public static boolean isUserCorrect(String login, String password) throws SQLException, SQLTimeoutException{
+    public static boolean isUserCorrect(String login, String password) throws SQLException, SQLTimeoutException {
         PreparedStatement statement = conn.prepareStatement("SELECT * FROM users");
         ResultSet resultSet = statement.executeQuery();
 
-        while(resultSet.next()){
-            if(resultSet.getString("login").equals(login)){
-                if(resultSet.getString("password").equals(password)){
+        while(resultSet.next()) {
+            if (resultSet.getString("login").equals(login)) {
+                if (resultSet.getString("password").equals(password)) {
                     statement.close();
                     resultSet.close();
                     return true;
                 }
-            } else{continue;}
+            } else {
+                continue;
+            }
         }
-
         statement.close();
         resultSet.close();
         return false;
     }
 
-    public static Boolean createUser(String login, String password, String email) throws SQLException, SQLTimeoutException{     
+    public static Boolean createUser(String login, String password, String email) throws SQLException, SQLTimeoutException {
+        PreparedStatement statement = conn.prepareStatement("SELECT * FROM users");
+        ResultSet resultSet = statement.executeQuery();
+        while(resultSet.next()){
+            if(resultSet.getString("login").equals(login)) {
+                statement.close();
+                resultSet.close();
+                return false;
+            }
+            if(resultSet.getString("email").equals(email)) {
+                statement.close();
+                resultSet.close();
+                return false;
+            }
+        }
         String sqlInsert = "INSERT INTO users(login, password, email) Values (?, ?, ?)";
         PreparedStatement preparedStatement = conn.prepareStatement(sqlInsert);
         preparedStatement.setString(1, login);
@@ -59,11 +78,13 @@ public class DataBase {
         preparedStatement.setString(3, email);
         int rows = preparedStatement.executeUpdate();
         preparedStatement.close();
-        if(rows != 0){ return true;}
+        if(rows != 0) { 
+            return true;
+        }
         else return false;
     }
 
-    public static void addRow(String name, int price, String description) throws SQLException, SQLTimeoutException{     
+    public static void addRow(String name, int price, String description) throws SQLException, SQLTimeoutException {     
         String sqlInsert = "INSERT INTO products(ProductName, Price, Description) Values (?, ?, ?)";
         PreparedStatement preparedStatement = conn.prepareStatement(sqlInsert);
         preparedStatement.setString(1, name);
@@ -73,7 +94,7 @@ public class DataBase {
         preparedStatement.close();
     }
 
-    public static void deleteRow(int to_delete) throws SQLException, SQLTimeoutException{
+    public static void deleteRow(int to_delete) throws SQLException, SQLTimeoutException {
         String sqlDelete = "DELETE FROM products WHERE id = (?)";
         PreparedStatement preparedStatement = conn.prepareStatement(sqlDelete);
         preparedStatement.setString(1, String.valueOf(to_delete));
@@ -81,14 +102,14 @@ public class DataBase {
         preparedStatement.close();
     }
 
-    public static ArrayList<Product> selectProducts() throws SQLException, SQLTimeoutException{
+    public static ArrayList<Product> selectProducts() throws SQLException, SQLTimeoutException {
 
         PreparedStatement statement = conn.prepareStatement("SELECT * FROM products");
         ResultSet resultSet = statement.executeQuery();
 
         ArrayList<Product> strResultSet = new ArrayList<>();
 
-        while(resultSet.next()){
+        while(resultSet.next()) {
             Product newProduct = Product.createProduct(
                 resultSet.getInt("id"),
                 resultSet.getString("ProductName"),

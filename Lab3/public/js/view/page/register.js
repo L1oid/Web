@@ -6,7 +6,10 @@ var pageRegister = (function() {
     }
 
     function registerButtonClicked() {
-        if ((document.getElementById('new_login').value == '' || document.getElementById('new_password').value == '' || document.getElementById('new_email').value == '') && document.getElementById('errRegister') == null) {
+        if (document.getElementById('new_login').value == '' || document.getElementById('new_password').value == '' || document.getElementById('new_email').value == '') {
+            if (document.getElementById('errRegister') != null) {
+                document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
+            }
             var errP = document.createElement('p');
             errP.id = 'errRegister';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
@@ -18,48 +21,35 @@ var pageRegister = (function() {
 
     function registerQuerryCallback(response) {
         if (response == "createUser_Ok_status") {
-            if (document.getElementById('errRegister') == null) {
-                var errP = document.createElement('p');
-                errP.id = 'errRegister';
-                errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: blue; font-size: 0.8em; font-weight: bold;';
-                errP.innerText = 'Register is complete! Please, go back to login!';
-                document.getElementById('registerDiv').appendChild(errP);
-                return;
-            }
             if (document.getElementById('errRegister') != null) {
-                if (document.getElementById('errRegister').innerText == 'User already exist or undefined error! Try another login or email!'){
-                    document.getElementById('errRegister').style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: blue; font-size: 0.8em; font-weight: bold;';
-                    document.getElementById('errRegister').innerText = 'Register is complete! Please, go back to login!';
-                }
+                document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
             }
+            var errP = document.createElement('p');
+            errP.id = 'errRegister';
+            errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: blue; font-size: 0.8em; font-weight: bold;';
+            errP.innerText = 'Register is complete! Please, go back to login!';
+            document.getElementById('registerDiv').appendChild(errP);
+            return;
         } else if (response == "userIsExistStatus") {
-            if (document.getElementById('errRegister') == null) {
-                var errP = document.createElement('p');
-                errP.id = 'errRegister';
-                errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-                errP.innerText = 'User already exist or undefined error! Try another login or email!';
-                document.getElementById('registerDiv').appendChild(errP);
-                return;
-            } else {
-                if (document.getElementById('errRegister').innerText == 'Register is complete! Please, go back to login!'){
-                    document.getElementById('errRegister').style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-                    document.getElementById('errRegister').innerText = 'User already exist or undefined error! Try another login or email!';
-                }
+            if (document.getElementById('errRegister') != null) {
+                document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
             }
+            var errP = document.createElement('p');
+            errP.id = 'errRegister';
+            errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
+            errP.innerText = 'User already exist! Try another login or email!';
+            document.getElementById('registerDiv').appendChild(errP);
+            return;
         } else {
-            if (document.getElementById('errRegister') == null) {
-                var errP = document.createElement('p');
-                errP.id = 'errRegister';
-                errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-                errP.innerText = 'User already exist or undefined error! Try another login or email!';
-                document.getElementById('registerDiv').appendChild(errP);
-                return;
-            } else {
-                if (document.getElementById('errRegister').innerText == 'Register is complete! Please, go back to login!') {
-                    document.getElementById('errRegister').style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-                    document.getElementById('errRegister').innerText = 'User already exist or undefined error! Try another login or email!';
-                }
+            if (document.getElementById('errRegister') != null) {
+                document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
             }
+            var errP = document.createElement('p');
+            errP.id = 'errRegister';
+            errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
+            errP.innerText = 'Undefined error! Try another login or email!';
+            document.getElementById('registerDiv').appendChild(errP);
+            return;
         }
     }
 
@@ -104,8 +94,8 @@ var pageRegister = (function() {
     
         var btn1 = document.createElement('button');
         var btn2 = document.createElement('button');
-        btn1.textContent = 'Reg and Login';
-        btn2.textContent = 'Go Back';
+        btn1.textContent = 'Register';
+        btn2.textContent = 'Back';
     
         var divBtn = document.createElement('div');
         divBtn.id = 'RegisterButtons'
