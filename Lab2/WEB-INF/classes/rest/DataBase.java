@@ -25,7 +25,7 @@ public class DataBase {
     }
 
     private static Connection getConnection() throws SQLException, SQLTimeoutException{
-        String url = "jdbc:mysql://localhost:3306/lab1?useSSL=false&useUnicode=yes&characterEncoding=utf8";
+        String url = "jdbc:mysql://localhost:3306/web?useSSL=false&useUnicode=yes&characterEncoding=utf8";
     	String username = "root";
     	String password = "3cUUa7T9P9si";
 

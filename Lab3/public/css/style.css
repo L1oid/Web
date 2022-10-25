@@ -4,7 +4,7 @@ body {
     width: 100%     ;
 }
 
-.div-loginForm {
+.div-loginPageDisplay {
     background-color: #4682B4;
 
     display: flex;
@@ -49,14 +49,14 @@ table, th, td, tr {
     gap: 12px;
 }
 
-.table-displayMainPage {
+.table-mainPageDisplay {
     scale: 1.0;
     position: fixed;
     top: 10%;
     left: 0.5%;
 }
 
-.inpProductName-displayMainPage {
+.inpProductName-mainPageDisplay {
     scale: 1.0;
     position: fixed;
     top: 5%;
@@ -64,7 +64,7 @@ table, th, td, tr {
     width: 5.0%;
 }
 
-.inpPrice-displayMainPage {
+.inpPrice-mainPageDisplay {
     scale: 1.0;
     position: fixed;
     top: 5%;
@@ -72,7 +72,7 @@ table, th, td, tr {
     width: 5.0%;
 }
 
-.inpDescription-displayMainPage {
+.inpDescription-mainPageDisplay {
     scale: 1.0;
     position: fixed;
     top: 5%;
@@ -80,7 +80,7 @@ table, th, td, tr {
     width: 5.0%;
 }
 
-.btnAdd-displayMainPage {
+.btnAdd-mainPageDisplay {
     position: fixed;
     top: 5%;
     left: 18.4%;
