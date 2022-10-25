@@ -71,7 +71,7 @@ public class Service {
   }
 
   @POST
-  @Path("/user")
+  @Path("/register")
   @Consumes("application/json")
   @Produces("application/json")
   public Response createUser(String User){
@@ -188,7 +188,7 @@ public class Service {
   @Path("/deleteProduct")
   @Consumes("application/json")
   @Produces("application/json")
-  public Response deleteProducts(@HeaderParam("User-token") String userToken,@HeaderParam("Delete-row") int toDelete){
+  public Response deleteProduct(@HeaderParam("User-token") String userToken,@HeaderParam("Delete-row") int toDelete){
     Token token;
     Jsonb jsonb = JsonbBuilder.create();
     String resultJSON = jsonb.toJson("undefinedError");

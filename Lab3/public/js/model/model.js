@@ -29,7 +29,7 @@ var model = (function() {
         };
         var xhr = new XMLHttpRequest();
         var flagAsync = true;
-        xhr.open("POST", "/api/user", flagAsync)
+        xhr.open("POST", "/api/register", flagAsync)
         xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState != 4) return;
