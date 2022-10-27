@@ -1,4 +1,4 @@
 window.onload = function() {
-    var body = document.getElementById('body');        
-    pageLogin.render(body);
-};  
+    var root = document.getElementById('root');
+    router.render("loginPage", root);
+};

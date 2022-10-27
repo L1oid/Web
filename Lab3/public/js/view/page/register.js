@@ -1,8 +1,8 @@
 var pageRegister = (function() {
-    var body = undefined;
+    var root = undefined;
 
     function loginButtonClicked() {
-        pageLogin.render(body);
+        pageLogin.render(root);
     }
 
     function registerButtonClicked() {
@@ -58,7 +58,7 @@ var pageRegister = (function() {
     }
 
     function registerPageDisplay() {
-        body.removeChild(document.getElementById('loginDiv'));
+        root.removeChild(document.getElementById('loginDiv'));
         var div = document.createElement('div');
         div.id = 'registerDiv';
         div.className = 'div-loginPageDisplay WrapCenteredInlineBlock';
@@ -105,7 +105,7 @@ var pageRegister = (function() {
         divBtn.appendChild(btn2);
     
         div.appendChild(divBtn);
-        body.appendChild(div);
+        root.appendChild(div);
     
         btn1.addEventListener("click", registerButtonClicked);
         btn2.addEventListener("click", loginButtonClicked);
@@ -133,8 +133,8 @@ var pageRegister = (function() {
         registerPageDisplay();
     }
 
-    function init(bodyParam) {
-        body = bodyParam; 
+    function init(rootParam) {
+        root = rootParam; 
         renderPage();
     }
 

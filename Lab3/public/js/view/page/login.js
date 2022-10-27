@@ -1,12 +1,12 @@
 var pageLogin = (function() {
-    var body = undefined;
+    var root = undefined;
 
     function mainPageDisplay() {
-        pageMain.render(body);
+        pageMain.render(root);
     }
 
     function registerButtonClicked() {
-        pageRegister.render(body);
+        pageRegister.render(root);
     }
 
     function loginButtonClicked() {
@@ -57,7 +57,7 @@ var pageLogin = (function() {
 
     function loginPageDisplay() {
         if (document.getElementById('registerDiv') != null) {
-            body.removeChild(document.getElementById('registerDiv'));
+            root.removeChild(document.getElementById('registerDiv'));
         }
         var div = document.createElement('div');
         div.id = 'loginDiv';
@@ -103,7 +103,7 @@ var pageLogin = (function() {
         divBtn.appendChild(btn2);
     
         div.appendChild(divBtn);
-        body.appendChild(div);
+        root.appendChild(div);
     
         btn1.addEventListener("click", loginButtonClicked);
         inp1.addEventListener("keypress", function(event) {
@@ -129,8 +129,8 @@ var pageLogin = (function() {
         }
     }
 
-    function init(bodyParam) {
-        body = bodyParam; 
+    function init(rootParam) {
+        root = rootParam; 
         renderPage();
     }
 

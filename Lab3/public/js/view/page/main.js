@@ -1,8 +1,8 @@
 var pageMain = (function() {
-    var body = undefined;
+    var root = undefined;
 
     function loginPageDisplay() {
-        pageLogin.render(body);
+        pageLogin.render(root);
     }
 
     function deleteButtonClickedCallback(response) {
@@ -48,7 +48,7 @@ var pageMain = (function() {
         if(response == 'tokenError'){
             console.log("Error");
             localStorage.removeItem('AutoSellUserToken');
-            if(document.getElementById("productList") != null) body.removeChild(document.getElementById("productList"));
+            if(document.getElementById("productList") != null) root.removeChild(document.getElementById("productList"));
             setTimeout(startPage, 100);
             return;
         };
@@ -57,7 +57,7 @@ var pageMain = (function() {
             return;
         };
         if(document.getElementById("productList") != null){
-            body.removeChild(document.getElementById("productList"));
+            root.removeChild(document.getElementById("productList"));
         }
         var productListMenu = document.createElement('div');
         productListMenu.id = 'productList';
@@ -141,7 +141,7 @@ var pageMain = (function() {
         });
         productListMenu.appendChild(divAdd);
         productListMenu.appendChild(table);
-        body.appendChild(productListMenu);
+        root.appendChild(productListMenu);
     }
 
     function getProductList() {
@@ -150,7 +150,7 @@ var pageMain = (function() {
 
     function mainPageDisplay() {
         if (document.getElementById('loginDiv') != null) {
-            body.removeChild(document.getElementById('loginDiv'));
+            root.removeChild(document.getElementById('loginDiv'));
         }
     
         var mainpage = document.createElement('div');
@@ -162,13 +162,13 @@ var pageMain = (function() {
         btn_exit.textContent = 'Exit';
         btn_exit.addEventListener("click", function(){
             localStorage.removeItem('AutoSellUserToken');
-            body.removeChild(document.getElementById('mainPage'));
-            if(document.getElementById("productList") != null) body.removeChild(document.getElementById("productList"));
+            root.removeChild(document.getElementById('mainPage'));
+            if(document.getElementById("productList") != null) root.removeChild(document.getElementById("productList"));
             renderPage();
         });
     
         mainpage.appendChild(btn_exit);
-        body.appendChild(mainpage);
+        root.appendChild(mainpage);
         getProductList();
     }
 
@@ -181,8 +181,8 @@ var pageMain = (function() {
         }
     }
 
-    function init(bodyParam) {
-        body = bodyParam; 
+    function init(rootParam) {
+        root = rootParam; 
         renderPage();
     }
 
