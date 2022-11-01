@@ -2,7 +2,7 @@ var pageMain = (function() {
     var root = undefined;
 
     function loginPageDisplay() {
-        pageLogin.render(root);
+        router.render("loginPage");
     }
 
     function deleteButtonClickedCallback(response) {

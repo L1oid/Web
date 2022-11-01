@@ -25,8 +25,12 @@ var router = (function() {
 
     pages = [loginPage, registerPage, mainPage]
 
-    function pageRender(pageId, rootParam) {
+    function startPage(rootParam) {
         root = rootParam
+        loginPage.render(root);
+    }
+
+    function renderPage(pageId) {
         for (var i = 0; i < pages.length; i++) {
             if (pages[i].id == pageId) {
                 pages[i].render(root);
@@ -35,6 +39,7 @@ var router = (function() {
     }
 
     return {
-        render: pageRender
+        render: renderPage,
+        start: startPage
     };
 })();

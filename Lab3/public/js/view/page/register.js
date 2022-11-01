@@ -2,7 +2,7 @@ var pageRegister = (function() {
     var root = undefined;
 
     function loginButtonClicked() {
-        pageLogin.render(root);
+        router.render("loginPage");
     }
 
     function registerButtonClicked() {

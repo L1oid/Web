@@ -2,11 +2,11 @@ var pageLogin = (function() {
     var root = undefined;
 
     function mainPageDisplay() {
-        pageMain.render(root);
+        router.render("mainPage");
     }
 
     function registerButtonClicked() {
-        pageRegister.render(root);
+        router.render("registerPage");
     }
 
     function loginButtonClicked() {
