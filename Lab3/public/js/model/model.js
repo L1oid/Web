@@ -6,20 +6,13 @@ var model = (function() {
         }
         var xhr = new XMLHttpRequest();
         var flagAsync = true;
-        xhr.open("POST", "api/auth", flagAsync);
+        xhr.open("POST", "api/users/auth", flagAsync);
         xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
         xhr.onreadystatechange = function() {
             if (this.readyState != 4) return;
-            if (xhr.status !== 200) {  
-                console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
-                var response = JSON.parse(xhr.responseText);
-                console.log(response);
-                callback(response);
-            } else { 
-                var response = JSON.parse(xhr.responseText);
-                console.log(response);
-                callback(response);
-            } 
+            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
+            var response = JSON.parse(xhr.responseText);
+            callback(response, xhr.status);
         }
         xhr.send(JSON.stringify(user));
     }
@@ -32,44 +25,28 @@ var model = (function() {
         };
         var xhr = new XMLHttpRequest();
         var flagAsync = true;
-        xhr.open("POST", "api/register", flagAsync)
+        xhr.open("POST", "api/users/register", flagAsync)
         xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
         xhr.onreadystatechange = function() {
             if (xhr.readyState != 4) return;
-            if (xhr.status !== 200) {
-                console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
-                var response = JSON.parse(xhr.responseText);
-                console.log(response);
-                callback(response);
-            } else {
-                var response = JSON.parse(xhr.responseText);
-                console.log(response);
-                callback(response);
-            }
+            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
+            var response = JSON.parse(xhr.responseText);
+            callback(response, xhr.status);
         }
         xhr.send(JSON.stringify(user));
     }
 
     function _getProductsList(callback) {
-        if(localStorage.getItem('AutoSellUserToken') == null || localStorage.getItem('AutoSellUserToken') == undefined) {
-            return "tokenError";
-        }
         var xhr = new XMLHttpRequest();
         var flagAsync = true;
-        xhr.open("GET", "api/getProducts", flagAsync);
+        xhr.open("GET", "api/products/list", flagAsync);
         xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
         xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
         xhr.onreadystatechange = function() {
             if (this.readyState != 4) return;
-            if (xhr.status !== 200) {  
-                console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
-                return "RequestError";
-            } 
-            else { 
-                var response = JSON.parse(xhr.responseText);
-                console.log(response);  
-                callback(response);
-            } 
+            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
+            var response = JSON.parse(xhr.responseText);
+            callback(response, xhr.status);
         }
         xhr.send();
     }
@@ -77,44 +54,34 @@ var model = (function() {
     function _deleteProduct(deleteButtonValue, callback) {
         var xhr = new XMLHttpRequest();
         var flagAsync = true;
-        xhr.open("DELETE", "api/deleteProduct", flagAsync);
+        xhr.open("DELETE", "api/products/delete", flagAsync);
         xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
         xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
         xhr.setRequestHeader('Delete-row', parseInt(deleteButtonValue));
         xhr.onreadystatechange = function() {
             if (this.readyState != 4) return;
-            if (xhr.status !== 200) {  
-                console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
-                return "RequestError";
-            } 
-            else { 
-                var response = JSON.parse(xhr.responseText);
-                callback(response);
-            } 
+            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
+            callback(xhr.status); 
         }
         xhr.send();
     }
 
     function _addProduct(name, price, description, callback) {
         var product = {
-            productName: name,
+            name: name,
             price: parseInt(price),
             description: description
         }
         var xhr = new XMLHttpRequest();
         console.log(product);
         var flagAsync = true;
-        xhr.open("POST", "api/addProduct", flagAsync);
+        xhr.open("POST", "api/products/add", flagAsync);
         xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
         xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
         xhr.onreadystatechange = function() {
             if (this.readyState != 4) return;
-            if (xhr.status !== 200) {  
-                console.log( "Request error: " + xhr.status + ': ' + xhr.statusText );
-            } else {
-                var response = JSON.parse(xhr.responseText);
-                callback(response);
-            }
+            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
+            callback(xhr.status);
         }
         xhr.send(JSON.stringify(product));
     }

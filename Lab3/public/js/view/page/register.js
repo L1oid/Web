@@ -13,31 +13,31 @@ var pageRegister = (function() {
             var errP = document.createElement('p');
             errP.id = 'errRegister';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-            errP.innerText = 'Failed to Register! Error: Empty Login or Password!';
+            errP.innerText = 'Failed to Register! Empty Login or Password!';
             document.getElementById('registerDiv').appendChild(errP);
             return;
         } else registerQuery(document.getElementById('new_login').value, document.getElementById('new_password').value, document.getElementById('new_email').value); 
     }
 
-    function registerQuerryCallback(response) {
-        if (response == "createUser_Ok_status") {
+    function registerQuerryCallback(response, status) {
+        if (status == 200) {
             if (document.getElementById('errRegister') != null) {
                 document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
             }
             var errP = document.createElement('p');
             errP.id = 'errRegister';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: blue; font-size: 0.8em; font-weight: bold;';
-            errP.innerText = 'Register is complete! Please, go back to login!';
+            errP.innerText = 'Register is complete! Please, go back to login.';
             document.getElementById('registerDiv').appendChild(errP);
             return;
-        } else if (response == "userIsExistStatus") {
+        } else if (status == 401) {
             if (document.getElementById('errRegister') != null) {
                 document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
             }
             var errP = document.createElement('p');
             errP.id = 'errRegister';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-            errP.innerText = 'User already exist! Try another login or email!';
+            errP.innerText = 'User already exist! Try another login or email.';
             document.getElementById('registerDiv').appendChild(errP);
             return;
         } else {
@@ -47,7 +47,7 @@ var pageRegister = (function() {
             var errP = document.createElement('p');
             errP.id = 'errRegister';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-            errP.innerText = 'Undefined error! Try another login or email!';
+            errP.innerText = 'Server error! Try again.';
             document.getElementById('registerDiv').appendChild(errP);
             return;
         }

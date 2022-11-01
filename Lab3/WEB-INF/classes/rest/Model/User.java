@@ -1,6 +1,6 @@
-package rest;
+package rest.Model;
 
-public class User {
+public class User{
     private String login;
     private String password;
     private String email;
@@ -28,4 +28,5 @@ public class User {
     public void setLogin(String Login) {
         this.login = Login;
     }
+
 }

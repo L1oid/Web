@@ -17,27 +17,36 @@ var pageLogin = (function() {
             var errP = document.createElement('p');
             errP.id = 'errLogin';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-            errP.innerText = 'Failed to Login! Error: Empty Login or Password!';
+            errP.innerText = 'Failed to Login! Empty Login or Password!';
             document.getElementById('loginDiv').appendChild(errP);
             return;
         }
         else authQuerry(document.getElementById('login').value, document.getElementById('password').value);
     }
 
-    function authQuerryCallback(response) {
-        if (response.payload !== null && response.payload !== undefined) {
+    function authQuerryCallback(response, status) {
+        if (status == 200) {
             localStorage.setItem('AutoSellUserToken', JSON.stringify(response));
             if (document.getElementById('errLogin') != null) {
                 document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
-            } else {
-                var errP = document.createElement('p');
-                errP.id = 'errLogin';
-                errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: blue; font-size: 0.8em; font-weight: bold;';
-                errP.innerText = 'Logined! Please, wait for pesponse...';
-                document.getElementById('loginDiv').appendChild(errP);
             }
+            var errP = document.createElement('p');
+            errP.id = 'errLogin';
+            errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: blue; font-size: 0.8em; font-weight: bold;';
+            errP.innerText = 'Logined! Please, wait for pesponse...';
+            document.getElementById('loginDiv').appendChild(errP);
             renderPage();
             return;
+        }
+        else if (status == 401) {
+            if (document.getElementById('errLogin') != null) {
+                document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
+            }
+            var errP = document.createElement('p');
+            errP.id = 'errLogin';
+            errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
+            errP.innerText = 'Failed to Login! Invalid Login or Password.';
+            document.getElementById('loginDiv').appendChild(errP);
         }
         else {
             if (document.getElementById('errLogin') != null) {
@@ -46,7 +55,7 @@ var pageLogin = (function() {
             var errP = document.createElement('p');
             errP.id = 'errLogin';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
-            errP.innerText = 'Failed to Login! Error: Invalid Login or Password!';
+            errP.innerText = 'Server error! Try again.';
             document.getElementById('loginDiv').appendChild(errP);
         }
     }
