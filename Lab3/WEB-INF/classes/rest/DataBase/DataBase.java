@@ -36,12 +36,13 @@ public class DataBase implements IDataBase{
     }
 
     @Override
-    public Boolean isUserCorrect(String login, String password){
-        
-        try{
-            Connection conn = getConnection();
+    public Boolean isUserCorrect(String login, String password) {
 
-            if(conn != null){
+        Connection conn = getConnection();
+        
+        try {
+
+            if(conn != null) {
                 PreparedStatement statement = conn.prepareStatement("SELECT * FROM users");
                 ResultSet resultSet = statement.executeQuery();
 
@@ -61,24 +62,23 @@ public class DataBase implements IDataBase{
                 connectionPool.putback(conn);
 
                 return false;
-            }else{
+            } else {
+                connectionPool.putback(conn);
                 return null;
             }
-
-            
-
-        }catch(SQLException ex){
+        } catch(SQLException ex) {
             ex.printStackTrace();
+            connectionPool.putback(conn);
             return null;
         }
     }
 
     @Override
-    public Boolean createUser(String login, String password, String email){    
-        try{
-            Connection conn = getConnection();
+    public Boolean createUser(String login, String password, String email) {
+        Connection conn = getConnection();    
+        try {
 
-            if(conn != null){
+            if(conn != null) {
                 String sqlInsert = "INSERT INTO users(login, password, email) Values (?, ?, ?)";
 
                 PreparedStatement preparedStatement = conn.prepareStatement(sqlInsert);
@@ -94,24 +94,29 @@ public class DataBase implements IDataBase{
                 if(rows != 0){ return true;}
                 else return false;
 
-            }else return null;
+            } else {
+                connectionPool.putback(conn);
+                return null;
+            }
 
-        }catch(SQLException ex){
+        } catch(SQLException ex) {
+            connectionPool.putback(conn);
 
             if(Integer.parseInt(ex.getSQLState()) == 23505 || Integer.parseInt(ex.getSQLState()) == 23000) return false;
 
             return null;
         }
-        catch(NullPointerException ex){
+        catch(NullPointerException ex) {
+            connectionPool.putback(conn);
             return null;
         }
     }
 
     @Override
     public Integer addRow(String name, int price, String description) {    
-        try{
-            Connection conn = getConnection();
-            if(conn != null){
+        Connection conn = getConnection();
+        try {
+            if(conn != null) {
                 String sqlInsert = "INSERT INTO products(ProductName, Price, Description) Values (?, ?, ?)";
 
                 PreparedStatement preparedStatement = conn.prepareStatement(sqlInsert);
@@ -125,29 +130,33 @@ public class DataBase implements IDataBase{
 
                 connectionPool.putback(conn);
                 return rows;
-            }else return null;
-        }catch(SQLException ex){
+            } else {
+                connectionPool.putback(conn);
+                return null;
+            }
+        } catch(SQLException ex) {
+            connectionPool.putback(conn);
             ex.printStackTrace();
             return null;
         }
-        catch(NullPointerException ex){
+        catch(NullPointerException ex) {
+            connectionPool.putback(conn);
             return null;
         }
     }
 
     @Override
     public Integer deleteRows(Integer toDelete) {
-        try{
+        Connection conn = getConnection();
+        try {
             
-            if(toDelete != null){
+            if(toDelete != null) {
 
                 String sqlDelete = "DELETE FROM products WHERE id in (?)";
 
                 int rows = 0;
 
                 String toDeleteStr = "";
-
-                Connection conn = getConnection();
 
                 if(conn != null){
                     PreparedStatement preparedStatement = conn.prepareStatement(sqlDelete);
@@ -159,21 +168,26 @@ public class DataBase implements IDataBase{
                 connectionPool.putback(conn);
                 return rows;
 
-            }else return 0;
+            } else {
+                connectionPool.putback(conn);
+                return 0;
+            }
 
-        }catch(SQLException ex){
+        } catch(SQLException ex) {
+            connectionPool.putback(conn);
             ex.printStackTrace();
             return null;
         }
-        catch(NullPointerException ex){
+        catch(NullPointerException ex) {
+            connectionPool.putback(conn);
             return null;
         }
     }
 
     @Override
-    public ArrayList<ArrayList<String>> selectProducts(){
-        try{
-            Connection conn = getConnection();
+    public ArrayList<ArrayList<String>> selectProducts() {
+        Connection conn = getConnection();
+        try {
 
             if(conn != null){
 
@@ -199,13 +213,18 @@ public class DataBase implements IDataBase{
                 connectionPool.putback(conn);
 
                 return strResultSet;
-            }else return null;
+            } else {
+                connectionPool.putback(conn);
+                return null;
+            }
 
-        }catch(SQLException ex){
+        } catch(SQLException ex) {
+            connectionPool.putback(conn);
             ex.printStackTrace();
             return null;
         }
-        catch(NullPointerException ex){
+        catch(NullPointerException ex) {
+            connectionPool.putback(conn);
             return null;
         }
     }

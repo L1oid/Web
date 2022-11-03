@@ -42,46 +42,46 @@ body {
 }
 
 table, th, td, tr {
-    background-color: #4682B4;
+    background-color: #808080;
     border: 1px solid;
     border-collapse: collapse;
     padding: 10px;
     gap: 12px;
 }
 
-.table-mainPageDisplay {
-    scale: 1.0;
-    position: fixed;
-    top: 10%;
-    left: 0.5%;
-}
-
 .inpProductName-mainPageDisplay {
-    scale: 1.0;
-    position: fixed;
-    top: 5%;
-    left: 0.4%;
-    width: 5.0%;
+    width: 17.0%;
 }
 
 .inpPrice-mainPageDisplay {
-    scale: 1.0;
-    position: fixed;
-    top: 5%;
-    left: 6.4%;
-    width: 5.0%;
+    width: 17.0%;
 }
 
 .inpDescription-mainPageDisplay {
-    scale: 1.0;
-    position: fixed;
-    top: 5%;
-    left: 12.4%;
-    width: 5.0%;
+    width: 17.0%;
 }
 
-.btnAdd-mainPageDisplay {
+.productList {
+    max-height: 586px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px;
+    gap: 10px;
+
     position: fixed;
-    top: 5%;
-    left: 18.4%;
+    width: fit-content;
+    height: fit-content;
+    max-height: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-60%, -60%);
+    vertical-align: bottom;
+
+
+    background: #4682B4;
+    mix-blend-mode: normal;
+    border-radius: 10px;
+
+    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.295);
 }

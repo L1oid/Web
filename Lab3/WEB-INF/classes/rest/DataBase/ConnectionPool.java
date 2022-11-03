@@ -16,6 +16,7 @@ public class ConnectionPool implements IConnectionPool {
     private String login;
     private String password;
 
+    private int errorCount = 0;
 
     private int maxConnectionsCount = 15;
 
@@ -61,7 +62,32 @@ public class ConnectionPool implements IConnectionPool {
             conn = checkConnReconnect(conn);
         }
 
+        if(errorCount > 10){
+            closeConnections();
+            errorCount = 0;
+        }
+
+        usedConns.add(conn);
+
         return conn;
+    }
+
+    private void closeConnections(){
+        for(Connection conn : usedConns){
+            try{
+                conn.close();
+            }catch(SQLException ex){}
+        }
+
+        usedConns.clear();
+
+        for(Connection conn : availableConns){
+            try{
+                conn.close();
+            }catch(SQLException ex){}
+        }
+
+        availableConns.clear();
     }
 
     @Override
