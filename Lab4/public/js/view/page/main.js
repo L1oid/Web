@@ -1,5 +1,8 @@
-var pageMain = (function() {
-    var root = undefined;
+import { Product } from "../../model/productsModel.js";
+import router from "../router.js";
+
+export default (function() {
+    let root = undefined;
 
     function loginPageDisplay() {
         router.render("loginPage");
@@ -21,9 +24,10 @@ var pageMain = (function() {
     }
 
     function deleteButtonClicked() {
-        var deleteButtonValue = this.value;
-        console.log(deleteButtonValue);
-        model.deleteProduct(deleteButtonValue, deleteButtonClickedCallback);
+        let deleteButtonValue = this.value;
+        let product = new Product();
+        product.setCallback(deleteButtonClickedCallback);
+        product.delete(deleteButtonValue);
     }
 
     function addButtonClickedCallback(status) {
@@ -41,10 +45,13 @@ var pageMain = (function() {
     }
     
     function addButtonClicked() {
-        var name = document.getElementById('ProductName').value;
-        var price = document.getElementById('Price').value;
-        var description = document.getElementById('Description').value;
-        model.addProduct(name, price, description, addButtonClickedCallback);
+        let name = document.getElementById('ProductName').value;
+        let price = document.getElementById('Price').value;
+        let description = document.getElementById('Description').value;
+        let product = new Product();
+        product.setCallback(addButtonClickedCallback);
+        product.setProduct(name, parseInt(price), description);
+        product.add();
     }
 
     function getProductsListCallback(response, status) {
@@ -57,32 +64,32 @@ var pageMain = (function() {
             if(document.getElementById("productList") != null){
                 root.removeChild(document.getElementById("productList"));
             }
-            var productListMenu = document.createElement('div');
+            let productListMenu = document.createElement('div');
             productListMenu.id = 'productList';
             productListMenu.className = 'productList';
         
-            var inpProductName = document.createElement('input');
+            let inpProductName = document.createElement('input');
             inpProductName.className = "inpProductName-mainPageDisplay WrapCenteredInlineBlock";
             inpProductName.placeholder = "ProductName";
             inpProductName.id = "ProductName";
         
-            var inpPrice = document.createElement('input');
+            let inpPrice = document.createElement('input');
             inpPrice.className = "inpPrice-mainPageDisplay WrapCenteredInlineBlock";
             inpPrice.placeholder = "Price";
             inpPrice.id = "Price";
         
-            var inpDescription = document.createElement('input');
+            let inpDescription = document.createElement('input');
             inpDescription.className = "inpDescription-mainPageDisplay WrapCenteredInlineBlock";
             inpDescription.placeholder = "Description";
             inpDescription.id = "Description";
         
-            var btnAdd = document.createElement('button');
+            let btnAdd = document.createElement('button');
             btnAdd.className = "btnAdd-mainPageDisplay WrapCenteredInlineBlock";
             btnAdd.textContent = 'Add';
             btnAdd.type = 'submit';
             btnAdd.addEventListener("click", addButtonClicked);
         
-            var divAdd = document.createElement('div');
+            let divAdd = document.createElement('div');
             divAdd.className = 'productListAdd';
         
             divAdd.appendChild(inpProductName);
@@ -90,18 +97,18 @@ var pageMain = (function() {
             divAdd.appendChild(inpDescription);
             divAdd.appendChild(btnAdd);
         
-            var table = document.createElement('table');
+            let table = document.createElement('table');
             table.className = "table-mainPageDisplay WrapCenteredInlineBlock";
-            var th = document.createElement('tr');
-            var tdh1 = document.createElement('th');
+            let th = document.createElement('tr');
+            let tdh1 = document.createElement('th');
             tdh1.innerText = "ID";
-            var tdh2 = document.createElement('th');
+            let tdh2 = document.createElement('th');
             tdh2.innerText = "ProductName";
-            var tdh3 = document.createElement('th');
+            let tdh3 = document.createElement('th');
             tdh3.innerText = "Price";
-            var tdh4 = document.createElement('th');
+            let tdh4 = document.createElement('th');
             tdh4.innerText = "Description";
-            var tdh5 = document.createElement('th');
+            let tdh5 = document.createElement('th');
         
             th.appendChild(tdh1);
             th.appendChild(tdh2);
@@ -111,17 +118,17 @@ var pageMain = (function() {
             table.appendChild(th);
         
             response.forEach(function(item){
-                var tr = document.createElement('tr');
-                var td1 = document.createElement('td');
+                let tr = document.createElement('tr');
+                let td1 = document.createElement('td');
                 td1.innerText = item.id;
-                var td2 = document.createElement('td');
+                let td2 = document.createElement('td');
                 td2.innerText = item.name;
-                var td3 = document.createElement('td');
+                let td3 = document.createElement('td');
                 td3.innerText = item.price;
-                var td4 = document.createElement('td');
+                let td4 = document.createElement('td');
                 td4.innerText = item.description;
-                var td5 = document.createElement('td');
-                var currentButton = document.createElement('button');
+                let td5 = document.createElement('td');
+                let currentButton = document.createElement('button');
                 currentButton.className = "currentButtonDelete";
                 currentButton.textContent = 'Delete';
                 currentButton.type = 'submit';
@@ -148,7 +155,9 @@ var pageMain = (function() {
     }
 
     function getProductList() {
-        model.getProductsList(getProductsListCallback);
+        let product = new Product();
+        product.setCallback(getProductsListCallback);
+        product.getList();
     }
 
     function mainPageDisplay() {
@@ -156,10 +165,10 @@ var pageMain = (function() {
             root.removeChild(document.getElementById('loginDiv'));
         }
     
-        var mainpage = document.createElement('div');
+        let mainpage = document.createElement('div');
         mainpage.id = 'mainPage';
     
-        var btn_exit = document.createElement('button');
+        let btn_exit = document.createElement('button');
         btn_exit.className = "ExitButton";
     
         btn_exit.textContent = 'Exit';

@@ -1,5 +1,8 @@
-var pageLogin = (function() {
-    var root = undefined;
+import { User } from "../../model/userModel.js";
+import router from "../router.js";
+
+export default (function() {
+    let root = undefined;
 
     function mainPageDisplay() {
         router.render("mainPage");
@@ -14,23 +17,23 @@ var pageLogin = (function() {
             if (document.getElementById('errLogin') != null) {
                 document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
             }
-            var errP = document.createElement('p');
+            let errP = document.createElement('p');
             errP.id = 'errLogin';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
             errP.innerText = 'Failed to Login! Empty Login or Password!';
             document.getElementById('loginDiv').appendChild(errP);
             return;
         }
-        else authQuerry(document.getElementById('login').value, document.getElementById('password').value);
+        else auth(document.getElementById('login').value, document.getElementById('password').value);
     }
 
-    function authQuerryCallback(response, status) {
+    function authQueryCallback(response, status) {
         if (status == 200) {
             localStorage.setItem('AutoSellUserToken', JSON.stringify(response));
             if (document.getElementById('errLogin') != null) {
                 document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
             }
-            var errP = document.createElement('p');
+            let errP = document.createElement('p');
             errP.id = 'errLogin';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: blue; font-size: 0.8em; font-weight: bold;';
             errP.innerText = 'Logined! Please, wait for pesponse...';
@@ -42,7 +45,7 @@ var pageLogin = (function() {
             if (document.getElementById('errLogin') != null) {
                 document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
             }
-            var errP = document.createElement('p');
+            let errP = document.createElement('p');
             errP.id = 'errLogin';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
             errP.innerText = 'Failed to Login! Invalid Login or Password.';
@@ -52,7 +55,7 @@ var pageLogin = (function() {
             if (document.getElementById('errLogin') != null) {
                 document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
             }
-            var errP = document.createElement('p');
+            let errP = document.createElement('p');
             errP.id = 'errLogin';
             errP.style = 'display: flex; width: 150px; justify-content: space-around; flex:auto; color: red; font-size: 0.8em; font-weight: bold;';
             errP.innerText = 'Server error! Try again.';
@@ -60,25 +63,28 @@ var pageLogin = (function() {
         }
     }
 
-    function authQuerry(login, password) {
-        model.authQuerry(login, password, authQuerryCallback);
+    function auth(login, password) {
+        let user = new User();
+        user.setCallback(authQueryCallback);
+        user.setUser(login, password, undefined);
+        user.authQuery();
     }
 
     function loginPageDisplay() {
         if (document.getElementById('registerDiv') != null) {
             root.removeChild(document.getElementById('registerDiv'));
         }
-        var div = document.createElement('div');
+        let div = document.createElement('div');
         div.id = 'loginDiv';
         div.className = 'div-loginPageDisplay WrapCenteredInlineBlock';
-        var header = document.createTextNode('AutoSell');
+        let header = document.createTextNode('AutoSell');
         div.appendChild(header);
         
-        var p1 = document.createElement('p');
-        var p2 = document.createElement('p');
+        let p1 = document.createElement('p');
+        let p2 = document.createElement('p');
     
-        var inp1 = document.createElement('input');
-        var inp2 = document.createElement('input');
+        let inp1 = document.createElement('input');
+        let inp2 = document.createElement('input');
     
         inp1.name = 'login';
         inp1.id = 'login';
@@ -97,14 +103,14 @@ var pageLogin = (function() {
         div.appendChild(p2);
     
     
-        var btn1 = document.createElement('button');
-        var btn2 = document.createElement('button');
+        let btn1 = document.createElement('button');
+        let btn2 = document.createElement('button');
         btn1.textContent = 'Login';
         btn1.type = 'submit';
         btn2.textContent = 'Register';
     
     
-        var divBtn = document.createElement('div');
+        let divBtn = document.createElement('div');
         divBtn.id = 'LoginButtons'
         divBtn.className = 'div-twoButtonsContainer';
     
