@@ -1,4 +1,4 @@
-set name=lab3
+set name=lab4
 
 cd .\%name%
 "c:\program files\winrar\winrar.exe" a -r -afzip .\%name%.zip .\*
