@@ -27,9 +27,12 @@ export default (function() {
         else auth(document.getElementById('login').value, document.getElementById('password').value);
     }
 
-    function authQueryCallback(response, status) {
-        if (status == 200) {
-            localStorage.setItem('AutoSellUserToken', JSON.stringify(response));
+    async function auth(login, password) {
+        let user = new User();
+        user.setUser(login, password, undefined);
+        let result = await user.authQuery();
+        if (result.status == 200) {
+            localStorage.setItem('AutoSellUserToken', JSON.stringify(result.data));
             if (document.getElementById('errLogin') != null) {
                 document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
             }
@@ -41,7 +44,7 @@ export default (function() {
             renderPage();
             return;
         }
-        else if (status == 401) {
+        else if (result.status == 401) {
             if (document.getElementById('errLogin') != null) {
                 document.getElementById('loginDiv').removeChild(document.getElementById('errLogin'));
             }
@@ -61,13 +64,6 @@ export default (function() {
             errP.innerText = 'Server error! Try again.';
             document.getElementById('loginDiv').appendChild(errP);
         }
-    }
-
-    function auth(login, password) {
-        let user = new User();
-        user.setCallback(authQueryCallback);
-        user.setUser(login, password, undefined);
-        user.authQuery();
     }
 
     function loginPageDisplay() {

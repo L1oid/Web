@@ -22,8 +22,11 @@ export default (function() {
         } else register(document.getElementById('new_login').value, document.getElementById('new_password').value, document.getElementById('new_email').value); 
     }
 
-    function registerQueryCallback(response, status) {
-        if (status == 200) {
+    async function register(login, password, email) {
+        let user = new User();
+        user.setUser(login, password, email);
+        let result = await user.registerQuery();
+        if (result.status == 200) {
             if (document.getElementById('errRegister') != null) {
                 document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
             }
@@ -33,7 +36,7 @@ export default (function() {
             errP.innerText = 'Register is complete! Please, go back to login.';
             document.getElementById('registerDiv').appendChild(errP);
             return;
-        } else if (status == 401) {
+        } else if (result.status == 401) {
             if (document.getElementById('errRegister') != null) {
                 document.getElementById('registerDiv').removeChild(document.getElementById('errRegister'));
             }
@@ -54,13 +57,6 @@ export default (function() {
             document.getElementById('registerDiv').appendChild(errP);
             return;
         }
-    }
-
-    function register(login, password, email) {
-        let user = new User();
-        user.setCallback(registerQueryCallback);
-        user.setUser(login, password, email);
-        user.registerQuery();
     }
 
     function registerPageDisplay() {

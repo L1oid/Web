@@ -5,11 +5,6 @@ class Product {
             price: undefined,
             description: undefined
         }
-        this.callback = undefined;
-    }
-
-    setCallback(callback) {
-        this.callback = callback;
     }
 
     setProduct(name, price, description) {
@@ -21,50 +16,62 @@ class Product {
     }
 
     getList() {
-        var xhr = new XMLHttpRequest();
-        var flagAsync = true;
-        let callback = this.callback;
-        xhr.open("GET", "api/products/list", flagAsync);
-        xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
-        xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
-        xhr.onreadystatechange = function() {
-            if (this.readyState != 4) return;
-            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
-            var response = JSON.parse(xhr.responseText);
-            callback(response, xhr.status);
-        }
-        xhr.send();
+        return new Promise( (resolve) => {
+            let status;
+            fetch('api/products/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'User-token': localStorage.getItem('AutoSellUserToken')}})
+            .then( (response) => { 
+                status = response.status;
+                return response.json()
+            })
+            .then( (data) => {
+                let result = {
+                    status: status,
+                    data: data
+                }
+                resolve(result);            
+            });
+        });
     }
 
     delete(deleteButtonValue) {
-        var xhr = new XMLHttpRequest();
-        var flagAsync = true;
-        let callback = this.callback;
-        xhr.open("DELETE", "api/products/delete", flagAsync);
-        xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
-        xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
-        xhr.setRequestHeader('Delete-row', parseInt(deleteButtonValue));
-        xhr.onreadystatechange = function() {
-            if (this.readyState != 4) return;
-            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
-            callback(xhr.status); 
-        }
-        xhr.send();
+        return new Promise( (resolve) => {
+            let status;
+            fetch('api/products/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'User-token': localStorage.getItem('AutoSellUserToken'),
+            'Delete-row': parseInt(deleteButtonValue)}})
+            .then( (response) => { 
+                status = response.status;
+                return response.json()
+            })
+            .then( (data) => {
+                let result = {
+                    status: status,
+                    data: data
+                }
+                resolve(result);
+            });
+        });
     }
 
     add() {
-        var xhr = new XMLHttpRequest();
-        var flagAsync = true;
-        let callback = this.callback;
-        xhr.open("POST", "api/products/add", flagAsync);
-        xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
-        xhr.setRequestHeader('User-token', localStorage.getItem('AutoSellUserToken'));
-        xhr.onreadystatechange = function() {
-            if (this.readyState != 4) return;
-            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
-            callback(xhr.status);
-        }
-        xhr.send(JSON.stringify(this.product));
+        return new Promise( (resolve) => {
+            let status;
+            fetch('api/products/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'User-token': localStorage.getItem('AutoSellUserToken')}, 
+            body: JSON.stringify(this.product)})
+            .then( (response) => { 
+                status = response.status;
+                return response.json()
+            })
+            .then( (data) => {
+                let result = {
+                    status: status,
+                    data: data
+                }
+                resolve(result);            
+            });
+        });
     }
 }
 

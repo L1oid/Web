@@ -5,11 +5,6 @@ class User {
             password: undefined,
             email: undefined
         }
-        this.callback = undefined;
-    }
-
-    setCallback(callback) {
-        this.callback = callback;
     }
 
     setUser(login, password, email) {
@@ -21,33 +16,39 @@ class User {
     }
 
     authQuery() {
-        let xhr = new XMLHttpRequest();
-        let flagAsync = true;
-        let callback = this.callback;
-        xhr.open("POST", "api/users/auth", flagAsync);
-        xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
-        xhr.onreadystatechange = function() {
-            if (this.readyState != 4) return;
-            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
-            let response = JSON.parse(xhr.responseText);
-            callback(response, xhr.status);
-        }
-        xhr.send(JSON.stringify(this.user));
+        return new Promise( (resolve) => {
+            let status;
+            fetch('api/users/auth',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(this.user)})
+            .then( (response) => { 
+                status = response.status;
+                return response.json()
+            })
+            .then( (data) => {
+                let result = {
+                    status: status,
+                    data: data
+                }
+                resolve(result);            
+            });
+        });
     }
 
     registerQuery() {
-        let xhr = new XMLHttpRequest();
-        let flagAsync = true;
-        let callback = this.callback;
-        xhr.open("POST", "api/users/register", flagAsync)
-        xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState != 4) return;
-            console.log( "Request status: " + xhr.status + ' | status text: ' + xhr.statusText + ' | response text: ' + xhr.responseText);
-            let response = JSON.parse(xhr.responseText);
-            callback(response, xhr.status);
-        }
-        xhr.send(JSON.stringify(this.user));
+        return new Promise( (resolve) => {
+            let status;
+            fetch('api/users/register',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(this.user)})
+            .then( (response) => { 
+                status = response.status;
+                return response.json()
+            })
+            .then( (data) => {
+                let result = {
+                    status: status,
+                    data: data
+                }
+                resolve(result);            
+            });
+        });
     }
 }
 

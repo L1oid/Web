@@ -8,33 +8,15 @@ export default (function() {
         router.render("loginPage");
     }
 
-    function deleteButtonClickedCallback(status) {
-        if(status == 200){
-            getProductList();
-            return;
-        }
-        if(response == 401){
-            localStorage.removeItem('AutoSellUserToken');
-            renderPage();
-            return;
-        } else {
-            getProductList();
-            return;
-        }
-    }
-
-    function deleteButtonClicked() {
+    async function deleteButtonClicked() {
         let deleteButtonValue = this.value;
         let product = new Product();
-        product.setCallback(deleteButtonClickedCallback);
-        product.delete(deleteButtonValue);
-    }
-
-    function addButtonClickedCallback(status) {
-        if(status == 200) {
+        let result = await product.delete(deleteButtonValue);
+        if(result.status == 200){
             getProductList();
             return;
-        } else if(status == 401) {
+        }
+        if(result.status == 401){
             localStorage.removeItem('AutoSellUserToken');
             renderPage();
             return;
@@ -44,23 +26,35 @@ export default (function() {
         }
     }
     
-    function addButtonClicked() {
+    async function addButtonClicked() {
         let name = document.getElementById('ProductName').value;
         let price = document.getElementById('Price').value;
         let description = document.getElementById('Description').value;
         let product = new Product();
-        product.setCallback(addButtonClickedCallback);
         product.setProduct(name, parseInt(price), description);
-        product.add();
+        let result = await product.add();
+        if(result.status == 200) {
+            getProductList();
+            return;
+        } else if(result.status == 401) {
+            localStorage.removeItem('AutoSellUserToken');
+            renderPage();
+            return;
+        } else {
+            getProductList();
+            return;
+        }
     }
 
-    function getProductsListCallback(response, status) {
-        if(status == 401) {
+    async function getProductList() {
+        let product = new Product();
+        let result = await product.getList();
+        if(result.status == 401) {
             localStorage.removeItem('AutoSellUserToken');
             if(document.getElementById("productList") != null) root.removeChild(document.getElementById("productList"));
             renderPage();
             return;
-        } else if (status == 200) {
+        } else if (result.status == 200) {
             if(document.getElementById("productList") != null){
                 root.removeChild(document.getElementById("productList"));
             }
@@ -117,7 +111,7 @@ export default (function() {
             th.appendChild(tdh5);
             table.appendChild(th);
         
-            response.forEach(function(item){
+            result.data.forEach(function(item){
                 let tr = document.createElement('tr');
                 let td1 = document.createElement('td');
                 td1.innerText = item.id;
@@ -136,7 +130,6 @@ export default (function() {
                 currentButton.addEventListener("click", deleteButtonClicked);
                 td5.appendChild(currentButton);
         
-        
                 tr.appendChild(td1);
                 tr.appendChild(td2);
                 tr.appendChild(td3);
@@ -152,12 +145,6 @@ export default (function() {
                 root.removeChild(document.getElementById("productList"));
             }
         }
-    }
-
-    function getProductList() {
-        let product = new Product();
-        product.setCallback(getProductsListCallback);
-        product.getList();
     }
 
     function mainPageDisplay() {
