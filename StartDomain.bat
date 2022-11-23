@@ -1,2 +1,2 @@
-"C:\Users\lloid\Portable\glassfish6\glassfish\bin\asadmin" start-domain
+"C:\Users\lloid\Study\Portable\GlassFish\glassfish\bin\asadmin" start-domain
 pause
