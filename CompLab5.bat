@@ -1,2 +1,15 @@
-javac Lab5\WEB-INF\classes\rest\Model\DTO\*.java Lab5\WEB-INF\classes\rest\Model\DataSource\User\*.java Lab5\WEB-INF\classes\rest\Controller\*.java Lab5\WEB-INF\classes\rest\Model\*.java Lab5\WEB-INF\classes\rest\DataBase\*.java -classpath C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;.Lab5\WEB-INF\classes\rest\"
+javac.exe Lab5\WEB-INF\classes\Pack\Model\DTO\*.java -classpath ".\Lab5\WEB-INF\classes"
+javac.exe Lab5\WEB-INF\classes\Pack\Model\Interfaces\*.java -classpath ".\Lab5\WEB-INF\classes"
+javac.exe Lab5\WEB-INF\classes\Pack\Model\Model.java -classpath ".\Lab5\WEB-INF\classes"
+
+javac.exe Lab5\WEB-INF\classes\Pack\Builder\Built.java -classpath ".\Lab5\WEB-INF\classes;C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;"
+javac.exe Lab5\WEB-INF\classes\Pack\Builder\Builder.java -classpath ".\Lab5\WEB-INF\classes;C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;C:\Users\lloid\Study\Portable\GlassFish\glassfish\modules\jakarta.enterprise.cdi-api.jar"
+
+javac.exe Lab5\WEB-INF\classes\Pack\Repository\User\*.java -classpath ".\Lab5\WEB-INF\classes;C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;"
+
+javac.exe Lab5\WEB-INF\classes\Pack\Controller\Config\*.java -classpath ".\Lab5\WEB-INF\classes;C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;"
+javac.exe Lab5\WEB-INF\classes\Pack\Controller\DTO\*.java -classpath ".\Lab5\WEB-INF\classes;C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;"
+javac.exe Lab5\WEB-INF\classes\Pack\Controller\Path\*.java -classpath ".\Lab5\WEB-INF\classes;C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;"
+javac.exe Lab5\WEB-INF\classes\Pack\Controller\Tools\*.java -classpath ".\Lab5\WEB-INF\classes;C:\Users\lloid\Study\Portable\GlassFish\glassfish\lib\javaee.jar;"
+
 pause
