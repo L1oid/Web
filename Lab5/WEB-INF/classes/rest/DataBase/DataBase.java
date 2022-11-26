@@ -36,44 +36,6 @@ public class DataBase implements IDataBase{
     }
 
     @Override
-    public Boolean isUserCorrect(String login, String password) {
-
-        Connection conn = getConnection();
-        
-        try {
-
-            if(conn != null) {
-                PreparedStatement statement = conn.prepareStatement("SELECT * FROM users");
-                ResultSet resultSet = statement.executeQuery();
-
-                while(resultSet.next()){
-                    if(resultSet.getString("login").equals(login)){
-                        if(resultSet.getString("password").equals(password)){
-                            statement.close();
-                            resultSet.close();
-                            return true;
-                        }
-                    } else{continue;}
-                }
-
-                statement.close();
-                resultSet.close();
-
-                connectionPool.putback(conn);
-
-                return false;
-            } else {
-                connectionPool.putback(conn);
-                return null;
-            }
-        } catch(SQLException ex) {
-            ex.printStackTrace();
-            connectionPool.putback(conn);
-            return null;
-        }
-    }
-
-    @Override
     public Boolean createUser(String login, String password, String email) {
         Connection conn = getConnection();    
         try {

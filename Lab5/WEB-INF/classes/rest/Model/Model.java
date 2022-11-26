@@ -1,11 +1,19 @@
 package rest.Model;
 
+import jakarta.inject.Inject;
+
 import java.util.ArrayList;
 
 import rest.DataBase.FDataBase;
 import rest.DataBase.IDataBase;
+import rest.Model.DTO.Product;
+import rest.Model.DTO.User;
+import rest.Model.DataSource.User.IUserDataSource;
 
 public class Model implements IModel{
+
+    @Inject
+    IUserDataSource datasource;
 
     public ArrayList<Product> GenerateProductList(ArrayList<ArrayList<String>> products){
            
@@ -40,12 +48,8 @@ public class Model implements IModel{
     };
 
     @Override
-    public Boolean checkUser(User user){
-
-        FDataBase dbFactory = new FDataBase();
-        IDataBase dataBase = dbFactory.initDataBase();
-        return dataBase.isUserCorrect(user.getLogin(), user.getPassword());
-
+    public Boolean checkUser(User user) throws Exception {
+        return datasource.checkUser(user.getLogin(), user.getPassword());
     }
 
     @Override

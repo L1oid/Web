@@ -13,7 +13,7 @@ import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 
-import rest.Model.User;
+import rest.Model.DTO.User;
 import rest.Model.IModel;
 import jakarta.inject.Inject;
 

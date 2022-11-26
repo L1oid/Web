@@ -19,7 +19,7 @@ import jakarta.json.bind.JsonbException;
 
 import java.util.ArrayList;
 
-import rest.Model.Product;
+import rest.Model.DTO.Product;
 import rest.Model.IModel;
 import jakarta.inject.Inject;
 
