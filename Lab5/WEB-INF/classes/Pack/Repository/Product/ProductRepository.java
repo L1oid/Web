@@ -58,14 +58,10 @@ public class ProductRepository implements IProductRepository {
 
             EProduct newEProduct = new EProduct(name, price, description);
 
-            Boolean status = null;
-            if(newEProduct.getName() != null || newEProduct.getName() != "") {
-                entityManager.persist(newEProduct);
-                status = true;
-            }
+            entityManager.persist(newEProduct);
 
             userTransaction.commit();
-            return status;
+            return true;
         } catch(Exception ex) {
             return null;
         }
