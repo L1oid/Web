@@ -12,14 +12,14 @@ import jakarta.inject.Inject;
 
 import Pack.Builder.Built;
 import Pack.Model.DTO.User;
-import Pack.Model.Interfaces.IModel;
+import Pack.Model.Interfaces.IUserModel;
 import Pack.Controller.DTO.Token;
 import Pack.Controller.Tools.TokenTools;
 
 @Path("/users")
 public class UserController {
     @Inject @Built
-    IModel model;
+    IUserModel model;
 
     @POST
     @Path("/auth")
@@ -44,7 +44,6 @@ public class UserController {
         }    
     }
     
-    /*
     @POST
     @Path("/register")
     @Consumes("application/json")
@@ -65,5 +64,5 @@ public class UserController {
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(jsonb.toJson(e.getMessage())).build();	             
         }    
-    }*/
+    }
 }

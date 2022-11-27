@@ -17,16 +17,15 @@ import java.util.ArrayList;
 
 import Pack.Builder.Built;
 import Pack.Model.DTO.Product;
-import Pack.Model.Interfaces.IModel;
+import Pack.Model.Interfaces.IProductModel;
 import Pack.Controller.DTO.Token;
 import Pack.Controller.Tools.TokenTools;
 
 @Path("/products")
-public class ProductsController {
+public class ProductController {
     @Inject @Built
-    IModel model;
+    IProductModel model;
 
-    /*
     @GET
     @Path("/list")
     @Produces("application/json")
@@ -40,15 +39,13 @@ public class ProductsController {
                 resultJSON = jsonb.toJson(model.getProductsList());
                 if (resultJSON == null) {
                     return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity(jsonb.toJson("Unavailable DataBase Connection")).build();
-                } else {
-                    return Response.ok(resultJSON).build(); 
-                }
+                } else return Response.ok(resultJSON).build();
             } else return Response.status(Response.Status.UNAUTHORIZED).entity(jsonb.toJson("ExpiredToken")).build();
         } catch (JsonbException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(jsonb.toJson(e.getMessage())).build();	             
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(jsonb.toJson(e.getMessage())).build();	             
-        } 
+        }
     }
 
     @POST
@@ -64,9 +61,9 @@ public class ProductsController {
             token = jsonb.fromJson(userToken, new Token(){}.getClass().getGenericSuperclass());
             product = jsonb.fromJson(newProduct, new Product(){}.getClass().getGenericSuperclass());
             if (TokenTools.verifyToken(token)) {
-                int row = model.addRow(product);
-                if (row == 1) {
-                    resultJSON = jsonb.toJson("rowAdded");
+                Boolean status = model.addProduct(product);
+                if (status == true) {
+                    resultJSON = jsonb.toJson("productAdded");
                     return Response.ok(resultJSON).build(); 
                 } else return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("Unavailable DataBase Connection").build();
             } else return Response.status(Response.Status.UNAUTHORIZED).entity("ExpiredToken").build();
@@ -87,13 +84,11 @@ public class ProductsController {
         try {
             token = jsonb.fromJson(userToken, new Token(){}.getClass().getGenericSuperclass());
             if (TokenTools.verifyToken(token)) {
-                int row = model.deleteRow(toDelete);
-                if(row == null) {
+                Boolean status = model.deleteProduct(toDelete);
+                if(status == null) {
                     return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("Unavailable DataBase Connection").build();
-                } else if(row == 0) {
-                    return Response.status(Response.Status.NO_CONTENT).entity("Nothing Deleted").build();
                 } else {
-                    resultJSON = jsonb.toJson(row);
+                    resultJSON = jsonb.toJson(status);
                     return Response.ok(resultJSON).build(); 
                 }
             } else return Response.status(Response.Status.UNAUTHORIZED).entity("ExpiredToken").build();
@@ -102,5 +97,5 @@ public class ProductsController {
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
         }    
-    }*/
+    }
 }

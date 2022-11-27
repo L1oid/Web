@@ -7,9 +7,10 @@ import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import jakarta.transaction.*;
 
-import Pack.Model.Interfaces.IRepository;
+import Pack.Model.Interfaces.IUserRepository;
+import Pack.Model.DTO.User;
 
-public class UserRepository implements IRepository {
+public class UserRepository implements IUserRepository {
 
     @PersistenceUnit(unitName = "test-resource_PersistenceUnit")
     private EntityManagerFactory entityManagerFactory;
@@ -20,7 +21,7 @@ public class UserRepository implements IRepository {
     @Override
     public Boolean checkUser(String login, String password) throws Exception {
         EntityManager entityManager;
-        Boolean status;
+        Boolean status = null;
         try {
             entityManager = entityManagerFactory.createEntityManager();
         } catch (Exception e) {
@@ -32,15 +33,43 @@ public class UserRepository implements IRepository {
 
             List<EUser> user = entityManager.createQuery("SELECT p FROM EUser p WHERE p.login = ?1", EUser.class).setParameter(1, login).getResultList();
 
-            if(user.size() == 1) {
-                if(user.get(0).getPassword().equals(password)) {
+            if (user.size() == 1) {
+                if (user.get(0).getPassword().equals(password)) {
                     status = true;
                 } else status = false;
             } else status = false;
             userTransaction.commit();
             return status;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean addUser(String login, String password, String email) throws Exception {
+        EntityManager entityManager;
+        Boolean status = null;
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
         } catch (Exception e) {
-            throw new Exception("Error while JPA operating: " + e.getMessage());
+		    throw new Exception("Error while Entity Manager initializing: " + e.getMessage()); 
+	    }	
+        try {
+            userTransaction.begin();
+            entityManager.joinTransaction();
+
+            EUser newUser = new EUser(login, password, email);
+
+            if (newUser.getLogin() != null) {
+                entityManager.persist(newUser);
+                status = true;
+            } else status = false;
+            userTransaction.commit();
+            return status;
+        } catch (Exception ex) {
+            if (ex.getCause().getCause().getCause() instanceof java.sql.SQLIntegrityConstraintViolationException) {
+                return false;
+            } else return null;
         }
     }
 }

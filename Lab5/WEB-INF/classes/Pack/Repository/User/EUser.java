@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "\"users\"")
 public class EUser implements Serializable {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "\"id\"")
     private int userId;
 
@@ -18,6 +18,14 @@ public class EUser implements Serializable {
 
     @Column(name = "\"email\"")
     private String email;
+
+    protected EUser() {}
+    
+    public EUser(String login, String password, String email) {
+        this.login = login;
+        this.email = password;
+        this.password = email;
+    }
     
     public int getUserId() {
         return userId;
