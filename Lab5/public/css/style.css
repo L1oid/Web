@@ -4,10 +4,6 @@ body {
     width: 100%;
 }
 
-.WrapCenteredInlineBlock {
-    display: inline-block;
-}
-
 .div-loginPageDisplay {
     background-color: #4682B4;
 
@@ -55,4 +51,8 @@ table, th, td, tr {
 
 .inpDescription-mainPageDisplay {
     width: 6.0%;
+}
+
+.WrapCenteredInlineBlock {
+    display: inline-block;
 }
