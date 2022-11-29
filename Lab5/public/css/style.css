@@ -1,7 +1,11 @@
 body {
     background-color: #808080;
     height: 100%;
-    width: 100%     ;
+    width: 100%;
+}
+
+.WrapCenteredInlineBlock {
+    display: inline-block;
 }
 
 .div-loginPageDisplay {
@@ -23,14 +27,6 @@ body {
 
     padding: 15px;
     justify-content: space-around;
-
-    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.295);
-
-    border-radius: 3px;
-}
-
-.WrapCenteredInlineBlock {
-    display: inline-block;
 }
 
 .div-twoButtonsContainer {
@@ -42,7 +38,7 @@ body {
 }
 
 table, th, td, tr {
-    background-color: #808080;
+    background-color: #4682B4;
     border: 1px solid;
     border-collapse: collapse;
     padding: 10px;
@@ -50,38 +46,13 @@ table, th, td, tr {
 }
 
 .inpProductName-mainPageDisplay {
-    width: 17.0%;
+    width: 6.0%;
 }
 
 .inpPrice-mainPageDisplay {
-    width: 17.0%;
+    width: 6.0%;
 }
 
 .inpDescription-mainPageDisplay {
-    width: 17.0%;
-}
-
-.productList {
-    max-height: 586px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 14px;
-    gap: 10px;
-
-    position: fixed;
-    width: fit-content;
-    height: fit-content;
-    max-height: 600px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-60%, -60%);
-    vertical-align: bottom;
-
-
-    background: #4682B4;
-    mix-blend-mode: normal;
-    border-radius: 10px;
-
-    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.295);
+    width: 6.0%;
 }
