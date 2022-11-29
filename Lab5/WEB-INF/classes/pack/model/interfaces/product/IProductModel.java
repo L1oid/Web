@@ -1,8 +1,8 @@
-package Pack.Model.Interfaces;
+package pack.model.interfaces.product;
 
 import java.util.ArrayList;
 
-import Pack.Model.DTO.Product;
+import pack.model.dto.Product;
 
 public interface IProductModel {
     void injectRepository(IProductRepository repository);

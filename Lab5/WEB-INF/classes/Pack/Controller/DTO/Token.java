@@ -1,4 +1,4 @@
-package Pack.Controller.DTO;
+package pack.controller.dto;
 
 public class Token {
 

@@ -1,4 +1,4 @@
-package Pack.Repository.Product;
+package pack.repository.product;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import jakarta.transaction.*;
 
-import Pack.Model.Interfaces.IProductRepository;
-import Pack.Model.DTO.Product;
+import pack.model.interfaces.product.IProductRepository;
+import pack.model.dto.Product;
 
 public class ProductRepository implements IProductRepository {
 

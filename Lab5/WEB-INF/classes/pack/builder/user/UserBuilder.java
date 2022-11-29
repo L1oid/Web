@@ -1,7 +1,8 @@
-package Pack.Builder;
+package pack.builder.user;
 
-import Pack.Model.Interfaces.IUserModel;
-import Pack.Model.Interfaces.IUserRepository;
+import pack.builder.Built;
+import pack.model.interfaces.user.IUserModel;
+import pack.model.interfaces.user.IUserRepository;
 
 import jakarta.inject.Inject;
 import jakarta.enterprise.inject.Produces;

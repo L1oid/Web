@@ -1,4 +1,4 @@
-package Pack.Model.Interfaces;
+package pack.model.interfaces.user;
 
 import java.util.ArrayList;
 

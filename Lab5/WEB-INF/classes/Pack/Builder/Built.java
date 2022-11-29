@@ -1,4 +1,4 @@
-package Pack.Builder;
+package pack.builder;
 
 import jakarta.inject.Qualifier;
 

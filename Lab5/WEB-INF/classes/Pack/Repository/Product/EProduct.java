@@ -1,9 +1,9 @@
-package Pack.Repository.Product;
+package pack.repository.product;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
 
-import Pack.Model.DTO.Product;
+import pack.model.dto.Product;
 
 @Entity
 @Table(name = "\"products\"")

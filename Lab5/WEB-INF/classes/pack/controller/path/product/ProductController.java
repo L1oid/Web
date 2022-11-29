@@ -1,4 +1,4 @@
-package Pack.Controller.Path;
+package pack.controller.path.product;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.GET;
@@ -15,11 +15,11 @@ import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 
-import Pack.Builder.Built;
-import Pack.Model.DTO.Product;
-import Pack.Model.Interfaces.IProductModel;
-import Pack.Controller.DTO.Token;
-import Pack.Controller.Tools.TokenTools;
+import pack.builder.Built;
+import pack.model.dto.Product;
+import pack.model.interfaces.product.IProductModel;
+import pack.controller.dto.Token;
+import pack.controller.tools.TokenTools;
 
 @Path("/products")
 public class ProductController {

@@ -1,4 +1,4 @@
-package Pack.Repository.User;
+package pack.repository.user;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import jakarta.annotation.Resource;
 import jakarta.persistence.*;
 import jakarta.transaction.*;
 
-import Pack.Model.Interfaces.IUserRepository;
-import Pack.Model.DTO.User;
+import pack.model.interfaces.user.IUserRepository;
+import pack.model.dto.User;
 
 public class UserRepository implements IUserRepository {
 

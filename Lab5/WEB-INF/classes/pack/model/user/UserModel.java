@@ -1,10 +1,10 @@
-package Pack.Model;
+package pack.model.user;
 
 import java.util.ArrayList;
 
-import Pack.Model.DTO.User;
-import Pack.Model.Interfaces.IUserRepository;
-import Pack.Model.Interfaces.IUserModel;
+import pack.model.dto.User;
+import pack.model.interfaces.user.IUserRepository;
+import pack.model.interfaces.user.IUserModel;
 
 public class UserModel implements IUserModel {
 

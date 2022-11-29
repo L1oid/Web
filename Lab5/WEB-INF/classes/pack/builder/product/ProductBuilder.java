@@ -1,7 +1,8 @@
-package Pack.Builder;
+package pack.builder.product;
 
-import Pack.Model.Interfaces.IProductModel;
-import Pack.Model.Interfaces.IProductRepository;
+import pack.builder.Built;
+import pack.model.interfaces.product.IProductModel;
+import pack.model.interfaces.product.IProductRepository;
 
 import jakarta.inject.Inject;
 import jakarta.enterprise.inject.Produces;

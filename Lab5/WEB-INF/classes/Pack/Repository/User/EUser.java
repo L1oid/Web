@@ -1,4 +1,4 @@
-package Pack.Repository.User;
+package pack.repository.user;
 
 import java.io.Serializable;
 import jakarta.persistence.*;

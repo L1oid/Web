@@ -1,11 +1,11 @@
-package Pack.Controller.Tools;
+package pack.controller.tools;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 
-import Pack.Controller.DTO.Payload;
-import Pack.Controller.DTO.Token;
+import pack.controller.dto.Payload;
+import pack.controller.dto.Token;
 
 public class TokenTools {
 

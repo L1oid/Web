@@ -1,8 +1,8 @@
-package Pack.Model.Interfaces;
+package pack.model.interfaces.user;
 
 import java.util.ArrayList;
 
-import Pack.Model.DTO.User;
+import pack.model.dto.User;
 
 public interface IUserModel {
     void injectRepository(IUserRepository repository);

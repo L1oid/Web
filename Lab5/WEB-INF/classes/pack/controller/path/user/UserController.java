@@ -1,4 +1,4 @@
-package Pack.Controller.Path;
+package pack.controller.path.user;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.POST;
@@ -10,11 +10,11 @@ import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.inject.Inject;
 
-import Pack.Builder.Built;
-import Pack.Model.DTO.User;
-import Pack.Model.Interfaces.IUserModel;
-import Pack.Controller.DTO.Token;
-import Pack.Controller.Tools.TokenTools;
+import pack.builder.Built;
+import pack.model.dto.User;
+import pack.model.interfaces.user.IUserModel;
+import pack.controller.dto.Token;
+import pack.controller.tools.TokenTools;
 
 @Path("/users")
 public class UserController {

@@ -1,10 +1,10 @@
-package Pack.Model;
+package pack.model.product;
 
 import java.util.ArrayList;
 
-import Pack.Model.DTO.Product;
-import Pack.Model.Interfaces.IProductRepository;
-import Pack.Model.Interfaces.IProductModel;
+import pack.model.dto.Product;
+import pack.model.interfaces.product.IProductRepository;
+import pack.model.interfaces.product.IProductModel;
 
 public class ProductModel implements IProductModel {
 
