@@ -18,7 +18,7 @@ class Product {
     getList() {
         return new Promise( (resolve) => {
             let status;
-            fetch('api/products/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
+            fetch('api/product/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
             'User-token': localStorage.getItem('AutoSellUserToken')}})
             .then( (response) => { 
                 status = response.status;
@@ -37,7 +37,7 @@ class Product {
     delete(deleteButtonValue) {
         return new Promise( (resolve) => {
             let status;
-            fetch('api/products/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
+            fetch('api/product/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
             'User-token': localStorage.getItem('AutoSellUserToken'),
             'Delete-row': parseInt(deleteButtonValue)}})
             .then( (response) => { 
@@ -57,7 +57,7 @@ class Product {
     add() {
         return new Promise( (resolve) => {
             let status;
-            fetch('api/products/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
+            fetch('api/product/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
             'User-token': localStorage.getItem('AutoSellUserToken')}, 
             body: JSON.stringify(this.product)})
             .then( (response) => { 

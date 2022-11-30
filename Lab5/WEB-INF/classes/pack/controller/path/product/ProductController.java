@@ -24,7 +24,7 @@ import pack.controller.interceptor.IdRequired;
 import pack.controller.dto.Token;
 import pack.controller.tools.TokenTools;
 
-@Path("/products")
+@Path("/product")
 public class ProductController {
     @Context
     ContainerRequestContext requestContext;
@@ -83,12 +83,10 @@ public class ProductController {
         String resultJSON = jsonb.toJson("undefinedError");
         try {
             Boolean status = model.deleteProduct(toDelete);
-            if(status == null) {
-                return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("Unavailable DataBase Connection").build();
-            } else {
+            if(status == true) {
                 resultJSON = jsonb.toJson(status);
-                return Response.ok(resultJSON).build(); 
-            }
+                return Response.ok(resultJSON).build();
+            } else return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("Unavailable DataBase Connection").build();
         } catch (JsonbException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();	             
         } catch (Exception e) {

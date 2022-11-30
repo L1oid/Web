@@ -132,7 +132,7 @@ export default (function() {
     }
 
     function renderPage() {
-        if(localStorage.getItem('AutoSellUserToken') == null) {
+        if (localStorage.getItem('AutoSellUserToken') == null) {
             loginPageDisplay();
         }
         else {

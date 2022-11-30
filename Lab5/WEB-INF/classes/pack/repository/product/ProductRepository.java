@@ -29,14 +29,11 @@ public class ProductRepository implements IProductRepository {
         try {
             userTransaction.begin();
             entityManager.joinTransaction();
-
             ArrayList<Product> productList = new ArrayList<>();
             List<EProduct> eProducts = entityManager.createQuery("SELECT p FROM EProduct p", EProduct.class).getResultList();
-
             for(EProduct eProduct : eProducts) {
                 productList.add(eProduct.convert());
             }
-
             userTransaction.commit();
             return productList;
         } catch(Exception ex) {
@@ -52,14 +49,11 @@ public class ProductRepository implements IProductRepository {
         } catch (Exception e) {
 		    throw new Exception("Error while Entity Manager initializing: " + e.getMessage()); 
 	    }
-        try{
+        try {
             userTransaction.begin();
             entityManager.joinTransaction();
-
             EProduct newEProduct = new EProduct(name, price, description);
-
             entityManager.persist(newEProduct);
-
             userTransaction.commit();
             return true;
         } catch(Exception ex) {
@@ -78,9 +72,7 @@ public class ProductRepository implements IProductRepository {
         try{
             userTransaction.begin();
             entityManager.joinTransaction();
-
             entityManager.createQuery("DELETE FROM EProduct p WHERE p.id = " + Integer.toString(toDelete), EProduct.class).executeUpdate();
-
             userTransaction.commit();
             return true;
         }
