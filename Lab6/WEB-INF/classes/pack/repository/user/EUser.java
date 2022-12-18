@@ -23,8 +23,8 @@ public class EUser implements Serializable {
     
     public EUser(String login, String password, String email) {
         this.login = login;
-        this.email = password;
-        this.password = email;
+        this.email = email;
+        this.password = password;
     }
     
     public int getUserId() {

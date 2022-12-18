@@ -1,5 +1,20 @@
-class User {
+class Store {
     constructor() {
+        this._callbacks = [];
+    }
+    
+    _emit(state) {
+        this._callbacks.forEach(callback => callback(state));
+    }
+
+    subscribe(callback) {
+        this._callbacks.push(callback);  
+    }
+}
+
+class User extends Store {
+    constructor() {
+        super();
         this.user = {
             login: undefined,
             password: undefined,
@@ -52,4 +67,18 @@ class User {
     }
 }
 
-export { User };
+ class UserFactory {
+    static _user = null;
+    static _createInstance() {
+        return new User();      
+    }
+       
+    static createInstance() {
+        if (UserFactory._user === null) {
+            UserFactory._user = UserFactory._createInstance();
+        }
+        return UserFactory._user;
+    }
+}
+
+export {UserFactory};
