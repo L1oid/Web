@@ -46,8 +46,7 @@ class XRegisterWindow extends HTMLElement {
         else if (result.status == 401) {
             console.log("User already exist! Try another login or email.")
         }
-        else
-        {
+        else {
             console.log("Server error! Try again.")
         }
     }
