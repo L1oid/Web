@@ -29,7 +29,12 @@ class Router {
             await import('./../page/' + view + '/component.js')
             let nodeView = document.createElement(view);
             let nodeApp = document.getElementById('app');
-            //nodeApp.removeChild(nodeApp.childNodes[0]);
+            console.log(nodeApp);
+            console.log(nodeApp.childNodes);
+            if (nodeApp.length != 0)
+            {
+                nodeApp.removeChild(nodeApp.childNodes[0]);
+            }
             nodeApp.appendChild(nodeView);
             history.pushState(null, null, url);
         }

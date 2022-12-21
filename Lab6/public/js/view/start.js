@@ -4,6 +4,7 @@
 
     router.add('login', 'x-login');
     router.add('register', 'x-register');
+    router.add('main', 'x-main');
 
     router.default('login');
 

@@ -33,8 +33,6 @@ class XLoginWindow extends HTMLElement {
         event.stopPropagation();
         let login = (this.shadowRoot.childNodes[3].xValue);
         let password = (this.shadowRoot.childNodes[5].xValue);
-        console.log(login);
-        console.log(password);
         let user = UserFactory.createInstance();
         user.setUser(login, password, undefined);
         let result = await user.authQuery();
@@ -42,6 +40,7 @@ class XLoginWindow extends HTMLElement {
         if (result.status == 200) {
             localStorage.setItem('AutoSellUserToken', JSON.stringify(result.data));
             console.log("Logined! Please, wait for pesponse...")
+            router.go('main');
         }
         else if (result.status == 401)
         {

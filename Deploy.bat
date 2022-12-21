@@ -10,4 +10,3 @@ del /q C:\Users\lloid\Study\Portable\GlassFish\glassfish\domains\domain1\autodep
 move .\%name%\%name%.war C:\Users\lloid\Study\Portable\GlassFish\glassfish\domains\domain1\autodeploy\
 del /q .\%name%\%name%.war
 del /q .\%name%\%name%.zip
-pause
