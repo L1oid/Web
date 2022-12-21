@@ -1,4 +1,8 @@
-export default function(data) {return `  
+export default function(data) {
+  result.data.forEach(function(item){
+    
+  });
+  return `
 <div>
  <br>
  ${data.id}
