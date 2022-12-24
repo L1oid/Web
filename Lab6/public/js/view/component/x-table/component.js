@@ -26,21 +26,17 @@ class XTable extends HTMLElement {
     }
 
     async _btn_delete_listener(id) {
-        console.log("Хорош");
         let deleteButtonValue = id;
         console.log(deleteButtonValue);
         let product = ProductFactory.createInstance();
         let result = await product.delete(deleteButtonValue);
         if(result.status == 200) {
-            console.log("Хорош");
             this._render();
         } else if(result.status == 401) {
-            console.log("Плох");
             localStorage.removeItem('AutoSellUserToken');
             let router = RouterFactory.createInstance();
             router.go('login');
         } else {
-            console.log("Плох");
             this._render();
         }
     }
@@ -57,7 +53,6 @@ class XTable extends HTMLElement {
             let router = RouterFactory.createInstance();
             router.go('login')
         }
-
         let count = 2;
         result.data.forEach(function(item) {
             count = count + 2;
@@ -65,7 +60,7 @@ class XTable extends HTMLElement {
         for (let i = 2; i < count; i = i + 2) {
             this.shadowRoot.childNodes[1].childNodes[3].childNodes[3].childNodes[i].childNodes[4].childNodes[0].addEventListener('click', this._btn_delete_listener.bind(this, this.shadowRoot.childNodes[1].childNodes[3].childNodes[3].childNodes[i].childNodes[4].childNodes[0].value));
         }
-        
+
     }
 }
 
