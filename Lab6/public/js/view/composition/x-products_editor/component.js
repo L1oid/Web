@@ -31,9 +31,9 @@ class XProductsEditor extends HTMLElement {
 
     async _btn_add_listener(event) {
         event.stopPropagation();
-        let name = (this.shadowRoot.childNodes[3].xValue);;
-        let price = (this.shadowRoot.childNodes[5].xValue);;
-        let description = (this.shadowRoot.childNodes[7].xValue);;
+        let name = (this.shadowRoot.childNodes[3].xValue);
+        let price = (this.shadowRoot.childNodes[5].xValue);
+        let description = (this.shadowRoot.childNodes[7].xValue);
         let product = ProductFactory.createInstance();
         product.setProduct(name, price, description);
         let result = await product.add();
