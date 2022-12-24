@@ -14,7 +14,8 @@ class XRegisterWindow extends HTMLElement {
     }
 
     connectedCallback() {  
-        this._render();
+        let str = "";
+        this._render(str);
     }
 
     disconnectedCallback() {
@@ -34,20 +35,20 @@ class XRegisterWindow extends HTMLElement {
         let login = (this.shadowRoot.childNodes[3].xValue);
         let password = (this.shadowRoot.childNodes[5].xValue);
         let email = (this.shadowRoot.childNodes[7].xValue);
-        console.log(login);
-        console.log(password);
-        console.log(email);
         let user = UserFactory.createInstance();
         user.setUser(login, password, email);
         let result = await user.registerQuery();
         if (result.status == 200) {
-            console.log("Register is complete! Please, go back to login.")
+            let str = "Register is complete! Please, go back to login.";
+            this._render(str);
         }
         else if (result.status == 401) {
-            console.log("User already exist! Try another login or email.")
+            let str = "User already exist! Try another login or email.";
+            this._render(str);
         }
         else {
-            console.log("Server error! Try again.")
+            let str = "Server error! Try again.";
+            this._render(str);
         }
     }
 
@@ -57,9 +58,9 @@ class XRegisterWindow extends HTMLElement {
         router.go('login')
     }
 
-    _render() {     
+    _render(str) {     
         if(!this.ownerDocument.defaultView) return;
-        this.shadowRoot.innerHTML = template(this);
+        this.shadowRoot.innerHTML = template(str);
         this.shadowRoot.childNodes[9].addEventListener('click', this._btn_register_listener.bind(this));
         this.shadowRoot.childNodes[11].addEventListener('click', this._btn_back_listener.bind(this));
     }

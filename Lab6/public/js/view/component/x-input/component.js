@@ -19,15 +19,11 @@ class XInput extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['x-value'];
+
     }
 
     attributeChangedCallback(attr, prev, next) {
-        if(prev !== next) {
-            if (attr === 'x-value') {
-                this.xValue = next;
-            }
-        }
+        
     }
 
     set xValue(value) {

@@ -1,6 +1,6 @@
 import template from './template.js'
-import '../../composition/x-add/component.js'
-import '../../component/x-table/component.js'
+
+import '../../composition/x-products_editor/component.js'
 
 class XMain extends HTMLElement {
     constructor() { 

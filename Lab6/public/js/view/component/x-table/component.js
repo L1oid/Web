@@ -29,7 +29,14 @@ class XTable extends HTMLElement {
         if(!this.ownerDocument.defaultView) return;
         let product = ProductFactory.createInstance();
         let result = await product.getList();
-        this.shadowRoot.innerHTML = template(result);
+        if (result.status == 200) {
+            this.shadowRoot.innerHTML = template(result);
+        }
+        else {
+            localStorage.removeItem('AutoSellUserToken');
+            let router = RouterFactory.createInstance();
+            router.go('login')
+        }
     }
 }
 

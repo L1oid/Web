@@ -14,7 +14,8 @@ class XLoginWindow extends HTMLElement {
     }
 
     connectedCallback() {  
-        this._render();
+        let str = "";
+        this._render(str);
     }
 
     disconnectedCallback() {
@@ -36,19 +37,22 @@ class XLoginWindow extends HTMLElement {
         let user = UserFactory.createInstance();
         user.setUser(login, password, undefined);
         let result = await user.authQuery();
-        let router = RouterFactory.createInstance();
         if (result.status == 200) {
             localStorage.setItem('AutoSellUserToken', JSON.stringify(result.data));
-            console.log("Logined! Please, wait for pesponse...")
+            let str = "Logined! Please, wait for pesponse...";
+            this._render(str);
+            let router = RouterFactory.createInstance();
             router.go('main');
         }
         else if (result.status == 401)
         {
-            console.log("Failed to Login! Invalid Login or Password.")
+            let str = "Failed to Login! Invalid Login or Password.";
+            this._render(str);
         }
         else
         {
-            console.log("Server error! Try again.")
+            let str = "Server error! Try again.";
+            this._render(str);
         }
     }
 
@@ -58,9 +62,9 @@ class XLoginWindow extends HTMLElement {
         router.go('register')
     }
 
-    _render() {     
+    _render(str) {     
         if(!this.ownerDocument.defaultView) return;
-        this.shadowRoot.innerHTML = template(this);
+        this.shadowRoot.innerHTML = template(str);
         this.shadowRoot.childNodes[7].addEventListener('click', this._btn_login_listener.bind(this));
         this.shadowRoot.childNodes[9].addEventListener('click', this._btn_register_listener.bind(this));
     }

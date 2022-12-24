@@ -2,11 +2,12 @@ import template from './template.js'
 
 import './../../component/x-button/component.js'
 import './../../component/x-input/component.js'
+import './../../component/x-table/component.js'
 
 import { ProductFactory } from '../../../domain/service.js'
 import { RouterFactory } from './../../route/router.js'
 
-class XAdd extends HTMLElement {
+class XProductsEditor extends HTMLElement {
     constructor() {  
         super();   
         this.attachShadow({ mode: 'open' });
@@ -37,13 +38,13 @@ class XAdd extends HTMLElement {
         product.setProduct(name, price, description);
         let result = await product.add();
         if(result.status == 200) {
-            console.log("Красава");
+            this._render();
         } else if(result.status == 401) {
             localStorage.removeItem('AutoSellUserToken');
             let router = RouterFactory.createInstance();
             router.go('login');
         } else {
-            console.log("Плох");
+            this._render();
         }
     }
 
@@ -62,4 +63,4 @@ class XAdd extends HTMLElement {
     }
 }
 
-customElements.define('x-add', XAdd);
+customElements.define('x-products_editor', XProductsEditor);

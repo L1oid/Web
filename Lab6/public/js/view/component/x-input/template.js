@@ -1,4 +1,4 @@
-export default function(vm) {return `  
+export default function() {return `  
   <div>                
    <input type='text'> 
    </input>

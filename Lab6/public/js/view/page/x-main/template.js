@@ -1,4 +1,3 @@
 export default function() {return `      
-    <x-add></x-add>
-    <x-table></x-table>
+    <x-products_editor></x-products_editor>
 `}
