@@ -29,7 +29,7 @@ class Router {
             await import('./../page/' + view + '/component.js')
             let nodeView = document.createElement(view);
             let nodeApp = document.getElementById('app');
-            if (nodeApp.length != 0)
+            if (nodeApp.childNodes.length != 0)
             {
                 nodeApp.removeChild(nodeApp.childNodes[0]);
             }

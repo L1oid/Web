@@ -27,7 +27,6 @@ class XTable extends HTMLElement {
 
     async _btn_delete_listener(id) {
         let deleteButtonValue = id;
-        console.log(deleteButtonValue);
         let product = ProductFactory.createInstance();
         let result = await product.delete(deleteButtonValue);
         if(result.status == 200) {
