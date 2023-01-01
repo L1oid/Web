@@ -60,7 +60,6 @@ class XTable extends HTMLElement {
         for (let i = 2; i < count; i = i + 2) {
             this.shadowRoot.childNodes[1].childNodes[3].childNodes[3].childNodes[i].childNodes[4].childNodes[0].addEventListener('click', this._btn_delete_listener.bind(this, this.shadowRoot.childNodes[1].childNodes[3].childNodes[3].childNodes[i].childNodes[4].childNodes[0].value));
         }
-
     }
 }
 
