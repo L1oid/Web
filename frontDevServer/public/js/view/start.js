@@ -1,12 +1,7 @@
-(async ()=>{ await true;
-    let routerModule = await import('./route/router.js')
-    let router = routerModule.RouterFactory.createInstance();
+import{Router}from './router.js'
 
-    router.add('login', 'x-login');
-    router.add('register', 'x-register');
-    router.add('main', 'x-main');
+let root = document.getElementById('root');
 
-    router.default('login');
+let router = new Router;
 
-    router.go();
-})();
+router._startPage(root);

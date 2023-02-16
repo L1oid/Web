@@ -3,5 +3,11 @@ export default function() {return `
    <button>
     <slot></slot>  
    </button>
-  </div>              
+  </div>
+  <style>
+    button{
+        color: #fff;
+        background: #573b8a;
+    }
+  </style>          
 `}
