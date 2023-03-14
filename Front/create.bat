@@ -1,2 +1,1 @@
-npx create-react-app start
-pause
+@rem npx create-react-app start

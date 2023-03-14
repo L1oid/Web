@@ -1,2 +1,2 @@
-@rem  cd ./start
-@rem  npm install --save react-router-dom history
+@rem cd ./start
+@rem npm install --save react-router-dom history
