@@ -1,0 +1,25 @@
+.ButtonsMenu {
+    display: flex;
+    flex: auto;
+    margin: 0 auto;
+    justify-content: space-around;
+    vertical-align: bottom;
+}
+
+.ButtonMenu {
+    background-color: #4682B4;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    float: left;
+    width: 100%;
+}
+
+.ButtonMenu:hover {
+    background-color: #30526e;
+}

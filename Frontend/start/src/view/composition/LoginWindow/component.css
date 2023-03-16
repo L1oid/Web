@@ -1,0 +1,45 @@
+body {
+    background-color: #d4d4d4;
+    height: 100%;
+    width: 100%;
+}
+
+.LoginWindow {
+    background-color: #4682B4;
+
+    max-height: fit-content;
+    max-width: 178px;
+
+    padding: 15px;
+
+    border: 1px solid rgb(60, 60, 60);
+    border-radius: 4px;
+
+    position: absolute;
+    top: 50%;
+    left: 53%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+    scale: 1.5;
+
+}
+
+.LoginText {
+    color: rgb(60, 60, 60);
+    font-family: arial;
+    margin-left: 11px;
+}
+
+.MessageText {
+    color: rgb(60, 60, 60);
+    font-family: arial;
+}
+
+.LoginButtons {
+    background-color: rgb(60, 60, 60); 
+    color: rgb(153, 153, 153);
+    border: 2px solid rgb(153, 153, 153);
+    border-radius: 4px;
+    margin-left: 21px;
+}
