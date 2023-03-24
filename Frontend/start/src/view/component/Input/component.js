@@ -13,7 +13,7 @@ class Component extends React.Component {
 
     render() {
         return (
-            <input type={this.props.type} placeholder={this.props.placeholder} onChange={this.handleChange}></input>
+            <input className={this.props.class} type={this.props.type} placeholder={this.props.placeholder} onChange={this.handleChange}></input>
         )
     }
 }

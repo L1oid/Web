@@ -48,33 +48,33 @@ class Component extends React.Component {
     let user = UserFactory.createInstance();
     user.setUser(login, password, email);
     let result = await user.registerQuery();
-    if (result.status == 200) {
+    if (result.status === 200) {
         this.setState({status: "Ok"});
-        this.setState({message: "Register is complete!"})
+        this.setState({message: "Регистрация завершена!"})
     }
-    else if (result.status == 401)
+    else if (result.status === 401)
     {
       this.setState({status: "Error"});
-      this.setState({message: "User already exist! Try another login or email."});
+      this.setState({message: "Пользователь уже существует! Измение логин или почту."});
     }
     else
     {
       this.setState({status: "error"});
-      this.setState({message: "Server error! Try again."})
+      this.setState({message: "Ошибка сервера! Попробуйте еще раз."})
     }
   }
 
   render() {
     return (
       <div className='RegisterWindow'>
-        <text className='RegisterText'>Registration</text>
+        <text className='RegisterText'>Регистрация</text>
         <Input type="login" placeholder="Login" getValue={this.onChangeLogin}/>
         <Input type="password" placeholder="Password" getValue={this.onChangePassword}/>
         <Input type="email" placeholder="Email" getValue={this.onChangeEmail}/>
-        <button className='RegisterButtons' onClick={this.onClickRegister}>Register</button>
-        <ButtonNavigate class='RegisterButtons' name='Back' value='/login'></ButtonNavigate>
-        {this.state.status == "Ok" && <text className='MessageText'>{this.state.message}</text> && <Navigate to="/login" replace={true} />}
-        {this.state.status == "Error" && <text className='MessageText'>{this.state.message}</text>}
+        <button className='RegisterButtons' onClick={this.onClickRegister}>Регистрация</button>
+        <ButtonNavigate class='RegisterButtons' name='Назад' value='/login'></ButtonNavigate>
+        {this.state.status === "Ok" && <text className='MessageText'>{this.state.message}</text> && <Navigate to="/login" replace={true} />}
+        {this.state.status === "Error" && <text className='MessageText'>{this.state.message}</text>}
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ButtonsMenu from '../../composition/ButtonsMenu/component.js';
+import HomeworkTable from '../../component/HomeworkTable/component.js';
 
 class Page extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Page extends React.Component {
     render() {
         return (
           <div>
-            <ButtonsMenu />
+            <HomeworkTable></HomeworkTable>
           </div>        
         );
       }
