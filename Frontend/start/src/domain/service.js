@@ -102,8 +102,8 @@ class Product extends Store {
     getList() {
         return new Promise( (resolve) => {
             let status;
-            fetch('api/product/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'User-token': localStorage.getItem('AutoSellUserToken')}})
+            fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/product/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken')}})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -121,8 +121,8 @@ class Product extends Store {
     delete(deleteButtonValue) {
         return new Promise( (resolve) => {
             let status;
-            fetch('api/product/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'User-token': localStorage.getItem('AutoSellUserToken'),
+            fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/product/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken'),
             'Delete-row': parseInt(deleteButtonValue)}})
             .then( (response) => { 
                 status = response.status;
@@ -141,8 +141,8 @@ class Product extends Store {
     add() {
         return new Promise( (resolve) => {
             let status;
-            fetch('api/product/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'User-token': localStorage.getItem('AutoSellUserToken')}, 
+            fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/product/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken')}, 
             body: JSON.stringify(this.product)})
             .then( (response) => { 
                 status = response.status;

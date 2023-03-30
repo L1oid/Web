@@ -51,7 +51,7 @@ class Component extends React.Component {
     }
     else
     {
-      this.setState({status: "error"});
+      this.setState({status: "Error"});
       this.setState({message: "Ошибка сервера! Попробуйте еще раз."})
     }
   }
