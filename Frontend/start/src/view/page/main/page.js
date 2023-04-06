@@ -1,22 +1,18 @@
 import React from 'react';
 
-import ButtonsMenu from '../../composition/ButtonsMenu/component.js';
+import { Provider } from 'react-redux';
+import Store from '../../redux/store.js';
 
-class Page extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        status: null
-      }
-    }
+import ButtonsMenu from '../../composition/buttons-menu/component.js';
 
-    render() {
-        return (
-          <div>
-            <ButtonsMenu />
-          </div>        
-        );
-      }
+function MainPage() {
+    return (
+        <Provider store = {Store} >
+            <div>
+                <ButtonsMenu />
+            </div>
+        </Provider>        
+    )
 }
 
-export default Page;
+export default MainPage;

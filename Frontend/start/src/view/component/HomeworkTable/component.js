@@ -20,12 +20,13 @@ class Component extends React.Component {
         this.onChangeExercise = this.onChangeExercise.bind(this);
         this.onChangeSubjectStatus = this.onChangeSubjectStatus.bind(this);
         this.onClickAdd = this.onClickAdd.bind(this);
+        this.onClickDelete = this.onClickDelete.bind(this);
     }
 
     async getList() {
         let product = ProductFactory.createInstance();
         let result = await product.getList();
-        if (result.status == 200) {
+        if (result.status === 200) {
             this.setState({result: result});
         }
         else {
@@ -56,7 +57,26 @@ class Component extends React.Component {
         let result = await product.add();
         if (result.status === 200) {
             let result = await product.getList();
-            if (result.status == 200) {
+            if (result.status === 200) {
+                this.setState({result: result});
+            }
+            else {
+                this.setState({status: "Error"});
+                localStorage.removeItem('MyStudyOrganaizedUserToken');
+            }
+        }
+        else if (result.status === 401) {
+            this.setState({status: "Error"});
+            localStorage.removeItem('MyStudyOrganaizedUserToken');
+        }
+    }
+
+    async onClickDelete(id) {
+        let product = ProductFactory.createInstance();
+        let result = await product.delete(id);
+        if (result.status === 200) {
+            let result = await product.getList();
+            if (result.status === 200) {
                 this.setState({result: result});
             }
             else {
@@ -77,7 +97,7 @@ class Component extends React.Component {
                 <td>{row.name}</td>
                 <td>{row.description}</td>
                 <td>{row.price}</td>
-                <td><button className="TableButton">Удалить</button></td>
+                <td><button className="TableButton" onClick={this.onClickDelete.bind(this, row.id)}>Удалить</button></td>
             </tr>
         );
         return (

@@ -1,19 +1,13 @@
 import React from 'react';
 
-import LoginWindow from '../../composition/LoginWindow/component.js';
+import LoginWindow from '../../composition/login-window/component.js';
 
-class Page extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-          <div>
+function LoginPage() {
+    return (
+        <div>
             <LoginWindow />
-          </div>        
-        );
-      }
+        </div>
+    )
 }
 
-export default Page;
+export default LoginPage;

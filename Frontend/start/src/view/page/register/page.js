@@ -1,19 +1,13 @@
 import React from 'react';
 
-import RegisterWindow from '../../composition/RegisterWindow/component.js';
+import RegisterWindow from '../../composition/register-window/component.js';
 
-class Page extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-          <div>
+function RegisterPage() {
+    return (
+        <div>
             <RegisterWindow />
-          </div>        
-        );
-      }
+        </div>        
+    )
 }
 
-export default Page;
+export default RegisterPage;

@@ -1,24 +1,20 @@
 import React from 'react';
 
+import { Provider } from 'react-redux';
+import Store from '../../redux/store.js';
+
 import HomeworkTable from '../../component/HomeworkTable/component.js';
-import ButtonsMenu from '../../composition/ButtonsMenu/component.js';
+import ButtonsMenu from '../../composition/buttons-menu/component.js';
 
-class Page extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        status: null
-      }
-    }
-
-    render() {
-        return (
-          <div>
-            <ButtonsMenu></ButtonsMenu>
-            <HomeworkTable></HomeworkTable>
-          </div>        
-        );
-      }
+function HomeworkPage() {
+    return (
+        <Provider store = {Store} >
+            <div>
+                <ButtonsMenu />
+                <HomeworkTable />
+            </div>
+        </Provider>       
+    )
 }
 
-export default Page;
+export default HomeworkPage;
