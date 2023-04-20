@@ -1,3 +1,17 @@
+let wsID = generateUUID();
+console.log('WS ID: ' + wsID);
+
+let wsCounter = new WebSocket('ws://localhost:8080/mvn-start-1.0-SNAPSHOT/counter');
+
+wsCounter.onopen = function(event) {
+    console.log('WS counter was opened: ' + event);
+    wsCounter.send(wsID);      
+};
+           
+wsCounter.onmessage = function(event) {
+    console.log('ws counter got message: ' + event.data);
+};
+
 function generateUUID() {
     var dt = new Date().getTime();
     if (window.performance && typeof window.performance.now === "function") {
@@ -189,38 +203,25 @@ class ProductFactory {
 class SLAE extends Store {
     constructor() {
         super();
-        this.wsID = generateUUID();
-        console.log('WS ID: ' + this.wsID);
-    }
-
-    counter() {
-        let ws = new WebSocket('ws://localhost:8080/mvn-start-1.0-SNAPSHOT/counter');
-        ws.onopen = function(event) {
-            console.log('WS counter was opened: ' + event);
-            ws.send(this.wsID);      
-        };
-           
-        ws.onmessage = function(event) {
-            console.log('ws counter got message: ' + event.data);
-        };
     }
 
     echo() {
-        let ws = new WebSocket('ws://localhost:8080/mvn-start-1.0-SNAPSHOT/echo');
-        ws.onopen = function(event) {
+        let wsEcho = new WebSocket('ws://localhost:8080/mvn-start-1.0-SNAPSHOT/echo');
+        
+        wsEcho.onopen = function(event) {
             console.log('WS echo was opened: ' + event);
-            ws.send('Test WS message...');
+            wsEcho.send('Test WS message...');
         };
         
-        ws.onmessage = function(event) {
+        wsEcho.onmessage = function(event) {
             console.log('WS echo got mesage: ' + event.data);
-            ws.close();
+            wsEcho.close();
         };
     }
 
     counterAsync() {
-        console.log('counterAsync before fetch: ' + this.wsID);  
-        window.fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/counter_async', { method: 'GET', headers: {'WebSocketID': this.wsID} })      
+        console.log('counterAsync before fetch: ' + wsID);  
+        window.fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/counter_async', { method: 'GET', headers: {'WebSocketID': wsID} })      
         .then(function(response) {        
             if (response.ok) {
                 return response.text();

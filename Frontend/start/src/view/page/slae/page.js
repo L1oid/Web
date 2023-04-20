@@ -7,6 +7,7 @@ import ButtonsMenu from '../../composition/buttons-menu/component.js';
 import { SLAEFactory } from '../../../domain/service.js'
 
 function SLAEPage() {
+
     function echo() {
         let slae = SLAEFactory.createInstance();
         slae.echo();

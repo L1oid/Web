@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 
 import pack.model.interfaces.slae.async.ICounterAsync;
 import pack.model.interfaces.slae.async.ICounterUpdate;
+import pack.model.interfaces.slae.ICounter;
 import pack.controller.websocket.Counter;
 
 @Path("counter_async")
