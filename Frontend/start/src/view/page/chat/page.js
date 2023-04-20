@@ -1,4 +1,25 @@
-import React from 'react';
+import React from "react";
+
+import { Provider } from 'react-redux';
+import Store from '../../redux/store.js';
+
+import ButtonsMenu from '../../component/buttons-menu/component.js';
+import UserChat from '../../component/user-chat/component.js';
+
+function ChatPage() {
+    return (
+        <Provider store = {Store} >
+            <div>
+                <ButtonsMenu />
+                <UserChat />
+            </div>
+        </Provider>        
+    )
+}
+
+export default ChatPage
+
+/*import React, { useState } from "react";
 
 import { Provider } from 'react-redux';
 import Store from '../../redux/store.js';
@@ -6,7 +27,7 @@ import Store from '../../redux/store.js';
 import ButtonsMenu from '../../composition/buttons-menu/component.js';
 import { SLAEFactory } from '../../../domain/service.js'
 
-function SLAEPage() {
+function ChatPage() {
 
     function echo() {
         let slae = SLAEFactory.createInstance();
@@ -30,4 +51,4 @@ function SLAEPage() {
     )
 }
 
-export default SLAEPage
+export default ChatPage*/

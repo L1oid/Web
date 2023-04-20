@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RegisterWindow from '../../composition/register-window/component.js';
+import RegisterWindow from '../../component/register-window/component.js';
 
 function RegisterPage() {
     return (

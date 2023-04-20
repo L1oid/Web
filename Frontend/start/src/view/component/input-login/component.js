@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import {ACTIONS_CREATORS} from '../../redux/actions.js';
+import { ACTIONS_CREATORS } from '../../redux/actions.js';
 
 function InputLogin(props) {
     const value = useSelector((state) => state.value);

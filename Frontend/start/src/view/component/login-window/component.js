@@ -6,8 +6,8 @@ import Store from '../../redux/store.js';
 
 import './component.css';
 import Input from '../../component/Input/component.js';
-import InputLogin from '../../component/InputLogin/component.js';
-import ButtonNavigate from '../../component/ButtonNavigate/component';
+import InputLogin from '../../component/input-login/component.js';
+import ButtonNavigate from '../../component/button-navigate/component.js';
 
 import { UserFactory } from '../../../domain/service.js'
 
