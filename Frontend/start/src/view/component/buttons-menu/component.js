@@ -22,7 +22,7 @@ function ButtonsMenu(props) {
     return (
         <Provider store = {Store} >
             <div className='ButtonsMenu'>
-                <ButtonNavigate class="ButtonMenu" name ='Чат' value='/chat'></ButtonNavigate>
+                <ButtonNavigate class="ButtonMenu" name ='Counter' value='/slae'></ButtonNavigate>
                 <ButtonNavigate class="ButtonMenu" name='Домашнее задание' value='/homework'></ButtonNavigate>
                 <button className="ButtonMenu">Экзамены и зачёты</button>
                 <button className="ButtonMenu" onClick={onClickExit}>Выход <small>@{value}</small></button>

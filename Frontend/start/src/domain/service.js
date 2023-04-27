@@ -5,7 +5,7 @@ let wsCounter = new WebSocket('ws://localhost:8080/mvn-start-1.0-SNAPSHOT/counte
 
 wsCounter.onopen = function(event) {
     console.log('WS counter was opened: ' + event);
-    wsCounter.send(wsID);      
+    wsCounter.send(wsID);
 };
            
 wsCounter.onmessage = function(event) {
@@ -15,7 +15,7 @@ wsCounter.onmessage = function(event) {
 function generateUUID() {
     var dt = new Date().getTime();
     if (window.performance && typeof window.performance.now === "function") {
-        dt += performance.now(); //use high-precision timer if available
+        dt += performance.now();
     }
     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = (dt + Math.random()*16)%16 | 0;
@@ -221,7 +221,7 @@ class SLAE extends Store {
 
     counterAsync() {
         console.log('counterAsync before fetch: ' + wsID);  
-        window.fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/counter_async', { method: 'GET', headers: {'WebSocketID': wsID} })      
+        window.fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/slae/counter_async', { method: 'GET', headers: {'WebSocketID': wsID} })      
         .then(function(response) {        
             if (response.ok) {
                 return response.text();
@@ -234,6 +234,28 @@ class SLAE extends Store {
         })
         .then(function(data) {
             console.log('counterAsync got result: ' + data); 
+        })
+        .catch(function(error) {
+            console.log('Error 2');
+            console.log(error);	
+        });
+    }
+
+    counterAsync2() {
+        console.log('counterAsync2 before fetch: ' + wsID);  
+        window.fetch('http://localhost:8080/mvn-start-1.0-SNAPSHOT/api/slae/counter_async2', { method: 'GET', headers: {'WebSocketID': wsID} })      
+        .then(function(response) {        
+            if (response.ok) {
+                return response.text();
+            }
+            else {
+                console.log('Error 1');
+                console.log(response);
+                throw "Response ERROR";
+            }	  	  
+        })
+        .then(function(data) {
+            console.log('counterAsync2 got result: ' + data); 
         })
         .catch(function(error) {
             console.log('Error 2');

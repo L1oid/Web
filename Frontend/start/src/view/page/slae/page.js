@@ -1,30 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Provider } from 'react-redux';
 import Store from '../../redux/store.js';
 
 import ButtonsMenu from '../../component/buttons-menu/component.js';
-import UserChat from '../../component/user-chat/component.js';
-
-function ChatPage() {
-    return (
-        <Provider store = {Store} >
-            <div>
-                <ButtonsMenu />
-                <UserChat />
-            </div>
-        </Provider>        
-    )
-}
-
-export default ChatPage
-
-/*import React, { useState } from "react";
-
-import { Provider } from 'react-redux';
-import Store from '../../redux/store.js';
-
-import ButtonsMenu from '../../composition/buttons-menu/component.js';
 import { SLAEFactory } from '../../../domain/service.js'
 
 function ChatPage() {
@@ -39,16 +18,28 @@ function ChatPage() {
         slae.counterAsync();
     }
 
+    function counter2() {
+        let slae = SLAEFactory.createInstance();
+        slae.counterAsync2();
+    }
+
     return (
         <Provider store = {Store} >
             <div>
                 <ButtonsMenu />
+                <br></br><br></br>
                 <button onClick={echo}>Echo</button>
                 <br></br><br></br>
+                WebSocket Default
+                <br></br>
                 <button onClick={counter}>CounterAsync</button>
+                <br></br><br></br>
+                WebSocket Modified
+                <br></br>
+                <button onClick={counter2}>CounterAsync2</button>
             </div>
         </Provider>        
     )
 }
 
-export default ChatPage*/
+export default ChatPage
