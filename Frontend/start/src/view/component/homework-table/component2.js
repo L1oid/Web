@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 import './component.css';
-import Input from '../../component/Input/component.js';
+import Input from '../Input/component.js';
 import { ProductFactory } from '../../../domain/service.js'
 
 class Component extends React.Component {
