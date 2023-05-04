@@ -8,6 +8,7 @@ import PageRegister from './view/page/register/page.js';
 import PageMain from './view/page/main/page.js';
 import PageHomework from './view/page/homework/page.js';
 import PageSLAE from './view/page/slae/page.js';
+import PageChat from './view/page/chat/page.js';
 
 const Provider = buildProvider();
 
@@ -18,6 +19,7 @@ const pgRegister = ( <PageRegister /> );
 const pgMain = ( <PageMain /> );
 const pgHomework = ( <PageHomework /> );
 const pgSLAE = ( <PageSLAE />);
+const pgChat = ( <PageChat />);
 
 const router = (
   <Provider>
@@ -30,6 +32,7 @@ const router = (
           <Route path="/main" element={pgMain} />
           <Route path="/homework" element={pgHomework} />
           <Route path="/slae" element={pgSLAE} />
+          <Route path="/chat" element={pgChat} />
         </Routes>
       </div>
     </BrowserRouter>
