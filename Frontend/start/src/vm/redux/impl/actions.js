@@ -3,7 +3,7 @@ const action = () => {
 };
 
 export const ACTIONS_TYPES = {
-    UPDATE:'update'
+    UPDATE:'update' 
 };
 
 export const  ACTIONS_CREATORS = {
@@ -12,5 +12,5 @@ export const  ACTIONS_CREATORS = {
         a.type = ACTIONS_TYPES.UPDATE;
         a.payload.value = value;
         return a;
-    }
-}; 
+    }    
+};

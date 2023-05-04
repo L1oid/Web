@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate } from "react-router-dom";
 
-import { Provider } from 'react-redux';
-import Store from '../../redux/store.js';
-import { useSelector } from 'react-redux';
+import { useCounterListener } from '../../../vm/redux/api.js';
 
 import ButtonNavigate from '../button-navigate/component.js';
 
@@ -11,7 +9,8 @@ import './component.css';
 
 function ButtonsMenu(props) {
 
-    const value = useSelector((state) => state.value);
+    let login = useCounterListener();
+    console.log(login);
     const [status, setStatus] = useState('');
 
     function onClickExit() {
@@ -20,15 +19,13 @@ function ButtonsMenu(props) {
     }
 
     return (
-        <Provider store = {Store} >
-            <div className='ButtonsMenu'>
-                <ButtonNavigate class="ButtonMenu" name ='Counter' value='/slae'></ButtonNavigate>
-                <ButtonNavigate class="ButtonMenu" name='Домашнее задание' value='/homework'></ButtonNavigate>
-                <button className="ButtonMenu">Экзамены и зачёты</button>
-                <button className="ButtonMenu" onClick={onClickExit}>Выход <small>@{value}</small></button>
-                {status === "Exit" && <Navigate to="/login" replace={true} />}
-            </div>
-        </Provider>
+        <div className='ButtonsMenu'>
+            <ButtonNavigate class="ButtonMenu" name ='Counter' value='/slae'></ButtonNavigate>
+            <ButtonNavigate class="ButtonMenu" name='Домашнее задание' value='/homework'></ButtonNavigate>
+            <button className="ButtonMenu">Экзамены и зачёты</button>
+            <button className="ButtonMenu" onClick={onClickExit}>Выход <small>@{login}</small></button>
+            {status === "Exit" && <Navigate to="/login" replace={true} />}
+        </div>
     )
 }
 

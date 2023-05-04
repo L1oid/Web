@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { Navigate } from "react-router-dom";
 
-import { Provider } from 'react-redux';
-import Store from '../../redux/store.js';
-
 import './component.css';
 import Input from '../../component/Input/component.js';
-import InputLogin from '../../component/input-login/component.js';
 import ButtonNavigate from '../../component/button-navigate/component.js';
 
 import { UserFactory } from '../../../domain/service.js'
+import { useCounterDispatcher } from '../../../vm/redux/api.js';
 
 function LoginWindow(props) {
 
@@ -18,8 +15,11 @@ function LoginWindow(props) {
     const [status, setStatus] = useState('');
     const [message, setMessage] = useState('');
 
+    let dispatch = useCounterDispatcher();
+
     function onChangeLogin(login) {
         setLogin(login);
+        dispatch(login);
     }
 
     function onChangePassword(password) {
@@ -48,17 +48,15 @@ function LoginWindow(props) {
     }
 
     return (
-        <Provider store = {Store} >
-            <div className='LoginWindow'>
-                <text className='LoginText'>My Study Organaized</text>
-                <InputLogin placeholder="Login" getValue={onChangeLogin}/>
-                <Input type="password" placeholder="Password" getValue={onChangePassword}/>
-                <button className='LoginButtons' onClick={onClickLogin}>Логин</button>
-                <ButtonNavigate class='LoginButtons' name='Регистрация' value='/register'></ButtonNavigate>
-                {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/main" replace={true} />}
-                {status === "Error" && <text className='MessageText'>{message}</text>}
-            </div>
-        </Provider>
+        <div className='LoginWindow'>
+            <text className='LoginText'>My Study Organaized</text>
+            <Input type="login" placeholder="Login" getValue={onChangeLogin}/>
+            <Input type="password" placeholder="Password" getValue={onChangePassword}/>
+            <button className='LoginButtons' onClick={onClickLogin}>Логин</button>
+            <ButtonNavigate class='LoginButtons' name='Регистрация' value='/register'></ButtonNavigate>
+            {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/main" replace={true} />}
+            {status === "Error" && <text className='MessageText'>{message}</text>}
+        </div>
     )
 }
 
