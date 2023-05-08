@@ -1,1 +1,0 @@
-asadmin deploy --force=true ./target/mvn-start-1.0-SNAPSHOT.war

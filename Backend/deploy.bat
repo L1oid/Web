@@ -1,0 +1,1 @@
+asadmin deploy --force=true ./target/server-1.0.war
