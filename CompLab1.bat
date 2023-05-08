@@ -1,2 +1,0 @@
-javac Lab1\WEB-INF\classes\controller\WebController.java Lab1\WEB-INF\classes\controller\DataBase.java -classpath "C:\Users\lloid\Portable\glassfish6\glassfish\lib\mysql-connector-java-8.0.30\mysql-connector-java-8.0.30.jar;C:\Users\lloid\Portable\glassfish6\glassfish\lib\javaee.jar;.Lab1\WEB-INF\classes"
-pause
