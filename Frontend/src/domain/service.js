@@ -1,5 +1,36 @@
 import Message from "./dto/message";
 
+function logDate(msg='') {
+    console.log(msg + ': ' + new Date());    
+}
+
+function generateUUID() {
+    let dt = new Date().getTime();
+    if(window.performance && typeof window.performance.now === "function") {
+        dt += performance.now();
+    }
+    let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c==='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
+
+let wsID = generateUUID();
+console.log('WS ID: ' + wsID);
+
+let ws = new WebSocket('ws://localhost:8080/server-1.0/counter');
+   
+ws.onopen = function(event) {
+    console.log('WS counter was opened: ' + event);
+    ws.send(wsID);      
+};
+   
+ws.onmessage = function(event) {
+    logDate('ws counter got message: ' + event.data);      
+};
+
 class Store {
     constructor() {
         this._callbacks = [];
@@ -159,6 +190,28 @@ class Product extends Store {
             });
         });
     }
+
+    counter() {  
+        logDate('counter before fetch: ' + wsID);
+        window.fetch('http://localhost:8080/server-1.0/api/counter', { method: 'GET', headers: {'ClientID': wsID} })            
+        .then(function(response) {        
+            if (response.ok) {
+                return response.text();
+            }
+            else {
+                console.log('Error 1');
+                console.log(response);
+                throw "Response ERROR";
+            } 	  
+         })
+        .then(function(data) {
+            logDate('counter got result: ' + data);    
+        })
+        .catch(function(error) {
+            console.log('Error 2');   
+            console.log(error);	
+        });
+    } 
 }
 
 class ProductFactory {

@@ -1,15 +1,15 @@
 import React from "react";
 
-import Chat from "../../component/chat/component";
+import ExamTable from '../../component/exam-table/component';
 import ButtonsMenu from "../../component/buttons-menu/component";
 
-function ChatPage(props) {
+function ExamPage(props) {
     return (
         <div>
             <ButtonsMenu></ButtonsMenu>
-            <Chat></Chat>
+            <ExamTable></ExamTable>
         </div>
     )
 }
 
-export default ChatPage;
+export default ExamPage;
