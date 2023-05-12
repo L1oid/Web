@@ -7,6 +7,8 @@ import ButtonNavigate from '../../component/button-navigate/component';
 
 import { UserFactory } from '../../../domain/service.js'
 
+const user = UserFactory.createInstance();
+
 function RegisterWindow() {
 
     const [login, setLogin] = useState('');
@@ -28,7 +30,6 @@ function RegisterWindow() {
     }
 
     async function onClickRegister() {
-        let user = UserFactory.createInstance();
         user.setUser(login, password, email);
         let result = await user.registerQuery();
         if (result.status === 200) {
@@ -50,9 +51,9 @@ function RegisterWindow() {
     return (
         <div className='RegisterWindow'>
             <text className='RegisterText'>Регистрация</text>
-            <Input type="login" placeholder="Login" getValue={onChangeLogin}/>
-            <Input type="password" placeholder="Password" getValue={onChangePassword}/>
-            <Input type="email" placeholder="Email" getValue={onChangeEmail}/>
+            <Input type="login" placeholder="Логин" getValue={onChangeLogin}/>
+            <Input type="password" placeholder="Пароль" getValue={onChangePassword}/>
+            <Input type="email" placeholder="Электронная почта" getValue={onChangeEmail}/>
             <button className='RegisterButtons' onClick={onClickRegister}>Регистрация</button>
             <ButtonNavigate class='RegisterButtons' name='Назад' value='/login'></ButtonNavigate>
             {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/login" replace={true} />}

@@ -57,6 +57,10 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.InputContainer button:hover {
+    background-color: #30526e;
+}
+
 .MessagesContainer::-webkit-scrollbar {
     width: 10px;
 }

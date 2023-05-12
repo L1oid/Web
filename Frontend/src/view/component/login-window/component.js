@@ -8,6 +8,8 @@ import ButtonNavigate from '../../component/button-navigate/component.js';
 import { UserFactory } from '../../../domain/service.js'
 import { useLoginDispatcher } from '../../../state/redux/api.js';
 
+const user = UserFactory.createInstance();
+
 function LoginWindow(props) {
 
     const [login, setLogin] = useState('');
@@ -27,7 +29,6 @@ function LoginWindow(props) {
     }
     
     async function onClickLogin() {
-        let user = UserFactory.createInstance();
         user.setUser(login, password, undefined);
         let result = await user.authQuery();
         if (result.status === 200) {
@@ -50,8 +51,8 @@ function LoginWindow(props) {
     return (
         <div className='LoginWindow'>
             <text className='LoginText'>My Study Organaized</text>
-            <Input type="login" placeholder="Login" getValue={onChangeLogin}/>
-            <Input type="password" placeholder="Password" getValue={onChangePassword}/>
+            <Input type="login" placeholder="Логин" getValue={onChangeLogin}/>
+            <Input type="password" placeholder="Пароль" getValue={onChangePassword}/>
             <button className='LoginButtons' onClick={onClickLogin}>Логин</button>
             <ButtonNavigate class='LoginButtons' name='Регистрация' value='/register'></ButtonNavigate>
             {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/main" replace={true} />}
