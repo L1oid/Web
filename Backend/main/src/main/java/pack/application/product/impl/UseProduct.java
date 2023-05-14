@@ -19,6 +19,11 @@ public class UseProduct implements Productable {
     public ArrayList<Product> getProductsList() throws Exception {
         return repository.getProductsList();
     }
+    
+    @Override
+    public ArrayList<Product> getSortedProductListByDate() throws Exception {
+        return repository.getSortedProductListByDate();
+    }
 
     @Override
     public Boolean addProduct(Product product) throws Exception {
@@ -28,10 +33,5 @@ public class UseProduct implements Productable {
     @Override
     public Boolean deleteProduct(int toDelete) throws Exception {
         return repository.deleteProduct(toDelete);
-    }
-
-    @Override
-    public String getNearestDate() throws Exception {
-        return repository.getNearestDate();
     }
 }

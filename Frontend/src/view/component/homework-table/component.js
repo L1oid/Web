@@ -14,6 +14,7 @@ class Component extends React.Component {
             subject_status: '',
             date: '',
             status: null,
+            sorted_status: false,
             result: {status: null, data: [{description: null, id: null, name: null, price: null, date: null}]}
         }
         this.onChangeSubject = this.onChangeSubject.bind(this);
@@ -22,6 +23,7 @@ class Component extends React.Component {
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onClickAdd = this.onClickAdd.bind(this);
         this.onClickDelete = this.onClickDelete.bind(this);
+        this.onClickSorted = this.onClickSorted.bind(this);
     }
 
     async getList() {
@@ -54,6 +56,25 @@ class Component extends React.Component {
 
     onChangeDate(date) {
         this.setState({date: date});
+    }
+
+    async onClickSorted() {
+        let product = ProductFactory.createInstance();
+        if (this.state.sorted_status === false) {
+            let result = await product.getSortedListByDate();
+            if (result.status === 200) {
+                this.setState({result: result});
+            }
+            else {
+                this.setState({status: "Error"});
+                localStorage.removeItem('MyStudyOrganaizedUserToken');
+            }
+            this.setState({sorted_status: true});
+        }
+        else if (this.state.sorted_status === true) {
+            this.getList();
+            this.setState({sorted_status: false});
+        }
     }
 
     async onClickAdd() {
@@ -110,7 +131,7 @@ class Component extends React.Component {
             <table>
                 <tr>
                     <th>ID</th>
-                    <th>Дата</th>
+                    <th><button className="TableButton" onClick={this.onClickSorted}>Дата</button></th>
                     <th>Предмет</th>
                     <th>Задание</th>
                     <th>Статус</th>

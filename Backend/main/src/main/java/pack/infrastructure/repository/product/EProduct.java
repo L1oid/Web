@@ -71,7 +71,7 @@ public class EProduct  implements Serializable {
     }
 
     public String getDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         String strDate = dateFormat.format(date);  
         return strDate;
     }

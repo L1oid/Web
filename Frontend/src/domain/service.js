@@ -122,6 +122,25 @@ class Product extends Store {
         });
     }
 
+    getSortedListByDate() {
+        return new Promise( (resolve) => {
+            let status;
+            fetch('http://localhost:8080/server-1.0/api/product/sorted_list_by_date',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken')}})
+            .then( (response) => { 
+                status = response.status;
+                return response.json()
+            })
+            .then( (data) => {
+                let result = {
+                    status: status,
+                    data: data
+                }
+                resolve(result);            
+            });
+        });
+    }
+
     delete(deleteButtonValue) {
         return new Promise( (resolve) => {
             let status;

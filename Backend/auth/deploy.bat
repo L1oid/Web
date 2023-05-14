@@ -1,1 +1,1 @@
-asadmin deploy --force=true ./target/server-1.0.war
+asadmin deploy --force=true ./target/auth-1.0.war

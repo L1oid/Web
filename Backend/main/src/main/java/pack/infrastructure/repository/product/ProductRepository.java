@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 import jakarta.annotation.Resource;
 import jakarta.persistence.*;
@@ -44,7 +45,7 @@ public class ProductRepository implements ProductRepositable {
     }
 
     @Override
-    public String getNearestDate() throws Exception {
+    public ArrayList<Product> getSortedProductListByDate() throws Exception {
         EntityManager entityManager;
         try {
             entityManager = entityManagerFactory.createEntityManager();
@@ -54,13 +55,13 @@ public class ProductRepository implements ProductRepositable {
         try {
             userTransaction.begin();
             entityManager.joinTransaction();
-            String date = "Дата отсутствует";
-            List<EProduct> eProducts = entityManager.createQuery("SELECT p FROM EProduct p", EProduct.class).getResultList();
+            ArrayList<Product> productList = new ArrayList<>();
+            List<EProduct> eProducts = entityManager.createQuery("SELECT p FROM EProduct p ORDER BY p.date ASC", EProduct.class).getResultList();
             for(EProduct eProduct : eProducts) {
-                date = eProduct.getDate();
+                productList.add(eProduct.convert());
             }
             userTransaction.commit();
-            return date;
+            return productList;
         } catch(Exception ex) {
             return null;
         }
@@ -77,7 +78,7 @@ public class ProductRepository implements ProductRepositable {
         try {
             userTransaction.begin();
             entityManager.joinTransaction();
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+            DateFormat format = new SimpleDateFormat("MM-dd-yyyy");
             Date newDate = format.parse(date);
             EProduct newEProduct = new EProduct(name, price, description, newDate);
             entityManager.persist(newEProduct);

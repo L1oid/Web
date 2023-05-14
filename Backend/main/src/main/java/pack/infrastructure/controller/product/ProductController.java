@@ -49,6 +49,25 @@ public class ProductController {
         }
     }
 
+    @GET
+    @IdRequired
+    @Path("/sorted_list_by_date")
+    @Produces("application/json")
+    public Response getSortedProductListByDate(@HeaderParam("User-token") String userToken) {
+        Jsonb jsonb = JsonbBuilder.create();
+        String resultJSON = jsonb.toJson("undefinedError");
+        try {
+            resultJSON = jsonb.toJson(model.getSortedProductListByDate());
+            if (resultJSON == null) {
+                return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity(jsonb.toJson("Unavailable DataBase Connection")).build();
+            } else return Response.ok(resultJSON).build();
+        } catch (JsonbException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonb.toJson(e.getMessage())).build();	             
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(jsonb.toJson(e.getMessage())).build();	             
+        }
+    }
+
     @POST
     @IdRequired
     @Path("/add")
