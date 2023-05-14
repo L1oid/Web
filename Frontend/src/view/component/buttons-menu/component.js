@@ -22,7 +22,6 @@ function ButtonsMenu(props) {
         <div className='ButtonsMenu'>
             <ButtonNavigate class="ButtonMenu" name ='Чат' value='/chat'></ButtonNavigate>
             <ButtonNavigate class="ButtonMenu" name='Домашнее задание' value='/homework'></ButtonNavigate>
-            <ButtonNavigate class="ButtonMenu" name='Экзамены и зачёты' value='/exam'></ButtonNavigate>
             <button className="ButtonMenu" onClick={onClickExit}>Выход <small>@{login}</small></button>
             {status === "Exit" && <Navigate to="/login" replace={true} />}
         </div>

@@ -6,19 +6,20 @@ import Input from '../Input/component.js';
 import { ProductFactory } from '../../../domain/service.js'
 
 class Component extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            subject: "",
-            exercise: "",
-            subject_status: "",
+            subject: '',
+            exercise: '',
+            subject_status: '',
+            date: '',
             status: null,
-            result: {status: null, data: [{description: null, id: null, name: null, price: null}]}
+            result: {status: null, data: [{description: null, id: null, name: null, price: null, date: null}]}
         }
         this.onChangeSubject = this.onChangeSubject.bind(this);
         this.onChangeExercise = this.onChangeExercise.bind(this);
         this.onChangeSubjectStatus = this.onChangeSubjectStatus.bind(this);
+        this.onChangeDate = this.onChangeDate.bind(this);
         this.onClickAdd = this.onClickAdd.bind(this);
         this.onClickDelete = this.onClickDelete.bind(this);
     }
@@ -51,9 +52,13 @@ class Component extends React.Component {
         this.setState({subject_status: subject_status});
     }
 
+    onChangeDate(date) {
+        this.setState({date: date});
+    }
+
     async onClickAdd() {
         let product = ProductFactory.createInstance();
-        product.setProduct(this.state.subject, this.state.subject_status, this.state.exercise);
+        product.setProduct(this.state.subject, this.state.subject_status, this.state.exercise, this.state.date);
         let result = await product.add();
         if (result.status === 200) {
             let result = await product.getList();
@@ -94,6 +99,7 @@ class Component extends React.Component {
         let table = this.state.result.data.map((row) =>
             <tr>
                 <td>{row.id}</td>
+                <td>{row.date}</td>
                 <td>{row.name}</td>
                 <td>{row.description}</td>
                 <td>{row.price}</td>
@@ -104,6 +110,7 @@ class Component extends React.Component {
             <table>
                 <tr>
                     <th>ID</th>
+                    <th>Дата</th>
                     <th>Предмет</th>
                     <th>Задание</th>
                     <th>Статус</th>
@@ -111,6 +118,7 @@ class Component extends React.Component {
                 </tr>
                 <tr>
                     <td></td>
+                    <td><Input class="TableInput" type="text" getValue={this.onChangeDate}/></td>
                     <td><Input class="TableInput" type="text" getValue={this.onChangeSubject}/></td>
                     <td><Input class="TableInput" type="text" getValue={this.onChangeExercise}/></td>
                     <td><Input class="TableInput" type="text" getValue={this.onChangeSubjectStatus}/></td>
