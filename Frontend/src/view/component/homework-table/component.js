@@ -28,7 +28,7 @@ class Component extends React.Component {
 
     async getList() {
         let product = ProductFactory.createInstance();
-        let result = await product.getList();
+        let result = await product.getList("GARMADON");
         if (result.status === 200) {
             this.setState({result: result});
         }
@@ -61,7 +61,7 @@ class Component extends React.Component {
     async onClickSorted() {
         let product = ProductFactory.createInstance();
         if (this.state.sorted_status === false) {
-            let result = await product.getSortedListByDate();
+            let result = await product.getSortedListByDate("GARMADON");
             if (result.status === 200) {
                 this.setState({result: result});
             }
@@ -80,9 +80,9 @@ class Component extends React.Component {
     async onClickAdd() {
         let product = ProductFactory.createInstance();
         product.setProduct(this.state.subject, this.state.subject_status, this.state.exercise, this.state.date);
-        let result = await product.add();
+        let result = await product.add("GARMADON");
         if (result.status === 200) {
-            let result = await product.getList();
+            let result = await product.getList("GARMADON");
             if (result.status === 200) {
                 this.setState({result: result});
             }
@@ -99,9 +99,9 @@ class Component extends React.Component {
 
     async onClickDelete(id) {
         let product = ProductFactory.createInstance();
-        let result = await product.delete(id);
+        let result = await product.delete(id, "GARMADON");
         if (result.status === 200) {
-            let result = await product.getList();
+            let result = await product.getList("GARMADON");
             if (result.status === 200) {
                 this.setState({result: result});
             }

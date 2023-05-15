@@ -18,7 +18,7 @@ import jakarta.inject.Inject;
 import java.util.ArrayList;
 
 import pack.infrastructure.builder.Built;
-import pack.infrastructure.interceptor.IdRequired;
+import pack.infrastructure.interceptor.TokenRequired;
 import pack.application.product.impl.dto.Product;
 import pack.application.product.api.Productable;
 
@@ -31,10 +31,10 @@ public class ProductController {
     Productable model;
 
     @GET
-    @IdRequired
+    @TokenRequired
     @Path("/list")
     @Produces("application/json")
-    public Response getProductList(@HeaderParam("User-token") String userToken) {
+    public Response getProductList(@HeaderParam("login") String login, @HeaderParam("token") String token) {
         Jsonb jsonb = JsonbBuilder.create();
         String resultJSON = jsonb.toJson("undefinedError");
         try {
@@ -50,10 +50,10 @@ public class ProductController {
     }
 
     @GET
-    @IdRequired
+    @TokenRequired
     @Path("/sorted_list_by_date")
     @Produces("application/json")
-    public Response getSortedProductListByDate(@HeaderParam("User-token") String userToken) {
+    public Response getSortedProductListByDate(@HeaderParam("login") String login, @HeaderParam("token") String token) {
         Jsonb jsonb = JsonbBuilder.create();
         String resultJSON = jsonb.toJson("undefinedError");
         try {
@@ -69,11 +69,11 @@ public class ProductController {
     }
 
     @POST
-    @IdRequired
+    @TokenRequired
     @Path("/add")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addProduct(@HeaderParam("User-token") String userToken, String newProduct) {
+    public Response addProduct(@HeaderParam("login") String login, @HeaderParam("token") String token, String newProduct) {
         Product product;
         Jsonb jsonb = JsonbBuilder.create();
         String resultJSON = jsonb.toJson("undefinedError");
@@ -92,10 +92,10 @@ public class ProductController {
     }
 
     @DELETE
-    @IdRequired
+    @TokenRequired
     @Path("/delete")
     @Produces("application/json")
-    public Response deleteProducts(@HeaderParam("User-token") String userToken,@HeaderParam("Delete-row") int toDelete) {
+    public Response deleteProducts(@HeaderParam("login") String login, @HeaderParam("token") String token, @HeaderParam("Delete-row") int toDelete) {
         Jsonb jsonb = JsonbBuilder.create();
         String resultJSON = jsonb.toJson("undefinedError");
         try {

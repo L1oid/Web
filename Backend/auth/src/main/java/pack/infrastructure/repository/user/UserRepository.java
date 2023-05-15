@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import jakarta.annotation.Resource;
 import jakarta.persistence.*;
-import jakarta.transaction.*;
 
 import pack.application.auth.service.api.UserRepositable;
 import pack.application.auth.service.impl.dto.User;
@@ -14,9 +13,6 @@ public class UserRepository implements UserRepositable {
 
     @PersistenceUnit(unitName = "test-resource_PersistenceUnit")
     private EntityManagerFactory entityManagerFactory;
-   
-    @Resource
-    private UserTransaction userTransaction;
 
     @Override
     public Boolean checkUser(String login, String password) throws Exception {
@@ -28,9 +24,6 @@ public class UserRepository implements UserRepositable {
 		    throw new Exception("Error while Entity Manager initializing: " + e.getMessage()); 
 	    }	
         try {
-            userTransaction.begin();
-            entityManager.joinTransaction();
-
             List<EUser> user = entityManager.createQuery("SELECT p FROM EUser p WHERE p.login = ?1", EUser.class).setParameter(1, login).getResultList();
 
             if (user.size() == 1) {
@@ -38,7 +31,6 @@ public class UserRepository implements UserRepositable {
                     status = true;
                 } else status = false;
             } else status = false;
-            userTransaction.commit();
             return status;
         } catch (Exception ex) {
             return null;
@@ -55,16 +47,12 @@ public class UserRepository implements UserRepositable {
 		    throw new Exception("Error while Entity Manager initializing: " + e.getMessage()); 
 	    }	
         try {
-            userTransaction.begin();
-            entityManager.joinTransaction();
-
             EUser newUser = new EUser(login, password, email);
 
             if (newUser.getLogin() != null) {
                 entityManager.persist(newUser);
                 status = true;
             } else status = false;
-            userTransaction.commit();
             return status;
         } catch (Exception ex) {
             if (ex.getCause().getCause().getCause() instanceof java.sql.SQLIntegrityConstraintViolationException) {

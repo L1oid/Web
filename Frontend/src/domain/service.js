@@ -35,7 +35,7 @@ class User extends Store {
     authQuery() {
         return new Promise( (resolve) => {
             let status;
-            fetch('http://localhost:8080/server-1.0/api/users/auth',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(this.user)})
+            fetch('http://localhost:8080/server/api/users/auth',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(this.user)})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -53,7 +53,7 @@ class User extends Store {
     registerQuery() {
         return new Promise( (resolve) => {
             let status;
-            fetch('http://localhost:8080/server-1.0/api/users/register',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(this.user)})
+            fetch('http://localhost:8080/server/api/users/register',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8'},body: JSON.stringify(this.user)})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -103,11 +103,11 @@ class Product extends Store {
         }
     }
 
-    getList() {
+    getList(login) {
         return new Promise( (resolve) => {
             let status;
-            fetch('http://localhost:8080/server-1.0/api/product/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken')}})
+            fetch('http://localhost:8080/server/api/product/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login}})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -122,11 +122,11 @@ class Product extends Store {
         });
     }
 
-    getSortedListByDate() {
+    getSortedListByDate(login) {
         return new Promise( (resolve) => {
             let status;
-            fetch('http://localhost:8080/server-1.0/api/product/sorted_list_by_date',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken')}})
+            fetch('http://localhost:8080/server/api/product/sorted_list_by_date',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login}})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -141,11 +141,11 @@ class Product extends Store {
         });
     }
 
-    delete(deleteButtonValue) {
+    delete(deleteButtonValue, login) {
         return new Promise( (resolve) => {
             let status;
-            fetch('http://localhost:8080/server-1.0/api/product/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken'),
+            fetch('http://localhost:8080/server/api/product/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login,
             'Delete-row': parseInt(deleteButtonValue)}})
             .then( (response) => { 
                 status = response.status;
@@ -161,12 +161,11 @@ class Product extends Store {
         });
     }
 
-    add() {
+    add(login) {
         return new Promise( (resolve) => {
             let status;
-            fetch('http://localhost:8080/server-1.0/api/product/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'User-token': localStorage.getItem('MyStudyOrganaizedUserToken')},
-            body: JSON.stringify(this.product)})
+            fetch('http://localhost:8080/server/api/product/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login}, body: JSON.stringify(this.product)})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -203,7 +202,7 @@ class Chat extends Store {
 
     open(login) {
         this.username = login
-        this.connection = new WebSocket('ws://localhost:8080/server-1.0/chat/' + this.username);
+        this.connection = new WebSocket('ws://localhost:8080/server/chat/' + this.username);
         this.connection.onmessage = (event) => {
             this._getMessage(event.data);
         };

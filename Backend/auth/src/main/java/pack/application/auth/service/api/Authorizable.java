@@ -1,10 +1,13 @@
 package pack.application.auth.service.api;
 
 import pack.application.auth.service.impl.dto.User;
-import pack.application.auth.service.api.UserRepositable;
 
 public interface Authorizable {
     void injectRepository(UserRepositable repository);
-    Boolean checkUser(User user) throws Exception;
-    Boolean addUser(User user) throws Exception;
+    void injectToken(Tokenable useToken);
+    void injectSender(Sendable sender);
+    void checkUser(User user) throws Exception;;
+    void addUser(User user) throws Exception;;
+    void createToken(User user);
+    void checkToken(User user, String token);
 }

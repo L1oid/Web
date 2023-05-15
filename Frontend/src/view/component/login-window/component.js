@@ -31,8 +31,9 @@ function LoginWindow(props) {
     async function onClickLogin() {
         user.setUser(login, password, undefined);
         let result = await user.authQuery();
+        console.log(result.data);
         if (result.status === 200) {
-            localStorage.setItem('MyStudyOrganaizedUserToken', JSON.stringify(result.data));
+            localStorage.setItem('MyStudyOrganaizedUserToken', result.data);
             setStatus("Ok");
             setMessage("Авторизован! Пожалуйста, дождитесь ответа...")
         }

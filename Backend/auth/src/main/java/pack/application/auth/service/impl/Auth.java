@@ -2,15 +2,15 @@ package pack.application.auth.service.impl;
 
 import pack.application.auth.service.api.Authorizable;
 import pack.application.auth.service.api.Tokenable;
+import pack.application.auth.service.api.Sendable;
 import pack.application.auth.service.api.UserRepositable;
 import pack.application.auth.service.impl.dto.User;
-import pack.application.auth.token.UserToken;
-import pack.application.auth.token.Payload;
-import pack.application.auth.token.dto.Token;
 
-public class Auth implements Authorizable, Tokenable {
+public class Auth implements Authorizable {
 
-    UserRepositable repository;
+    private UserRepositable repository;
+    private Tokenable useToken;
+    private Sendable sender;
 
     @Override
     public void injectRepository(UserRepositable repository) {
@@ -18,27 +18,36 @@ public class Auth implements Authorizable, Tokenable {
     } 
 
     @Override
-    public Boolean checkUser(User user) throws Exception {
-        return repository.checkUser(user.getLogin(), user.getPassword());
+    public void injectToken(Tokenable useToken) {
+        this.useToken = useToken;
     }
 
     @Override
-    public Boolean addUser(User user) throws Exception {
-        return repository.addUser(user.getLogin(), user.getPassword(), user.getEmail());
+    public void injectSender(Sendable sender) {
+        this.sender = sender;
     }
 
     @Override
-    public Boolean verify(Token token) {
-        return UserToken.verifyToken(token);
+    public void checkUser(User user) throws Exception {
+        Boolean status = repository.checkUser(user.getLogin(), user.getPassword());
+        sender.sendCheckUser(status);
     }
 
     @Override
-    public Payload generatePayload(String login, String email) {
-        return UserToken.createPayload(login, email);
+    public void addUser(User user) throws Exception {
+        Boolean status = repository.addUser(user.getLogin(), user.getPassword(), user.getEmail());
+        sender.sendAddUser(status);
     }
 
     @Override
-    public Token generateToken(Payload payload) {
-        return UserToken.createToken(payload);
+    public void createToken(User user) {
+        String token = useToken.createToken(user);
+        sender.sendCreateToken(token);
+    }
+
+    @Override
+    public void checkToken(User user, String token) {
+        Boolean status = useToken.checkToken(user, token);
+        sender.sendCheckToken(status);
     }
 }

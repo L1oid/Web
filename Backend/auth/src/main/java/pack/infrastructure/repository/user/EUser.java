@@ -1,6 +1,7 @@
 package pack.infrastructure.repository.user;
 
 import java.io.Serializable;
+
 import jakarta.persistence.*;
 
 @Entity

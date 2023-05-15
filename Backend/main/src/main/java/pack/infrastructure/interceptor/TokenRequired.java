@@ -1,13 +1,12 @@
-package pack.infrastructure.builder;
+package pack.infrastructure.interceptor;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import jakarta.ws.rs.NameBinding;
 
-import jakarta.inject.Qualifier;
-
-@Qualifier()
+@NameBinding
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.FIELD, ElementType.METHOD })
-public @interface Built {}
+@Target({ElementType.TYPE, ElementType.METHOD})
+public @interface TokenRequired {}
