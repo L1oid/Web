@@ -55,7 +55,7 @@ function LoginWindow(props) {
             <Input type="password" placeholder="Пароль" getValue={onChangePassword}/>
             <button className='LoginButtons' onClick={onClickLogin}>Логин</button>
             <ButtonNavigate class='LoginButtons' name='Регистрация' value='/register'></ButtonNavigate>
-            {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/main" replace={true} />}
+            {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/chat" replace={true} />}
             {status === "Error" && <text className='MessageText'>{message}</text>}
         </div>
     )
