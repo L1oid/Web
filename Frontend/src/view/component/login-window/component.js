@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Navigate } from "react-router-dom";
 
-import './component.css';
 import Input from '../../component/Input/component.js';
 import ButtonNavigate from '../../component/button-navigate/component.js';
-
 import { UserFactory } from '../../../domain/service.js'
 import { useLoginDispatcher } from '../../../state/redux/api.js';
+
+import './component.css';
 
 const user = UserFactory.createInstance();
 
@@ -52,8 +52,8 @@ function LoginWindow(props) {
     return (
         <div className='LoginWindow'>
             <text className='LoginText'>My Study Organaized</text>
-            <Input type="login" placeholder="Логин" getValue={onChangeLogin}/>
-            <Input type="password" placeholder="Пароль" getValue={onChangePassword}/>
+            <Input class='LoginInput' type="login" placeholder="Логин" getValue={onChangeLogin}/>
+            <Input class='LoginInput' type="password" placeholder="Пароль" getValue={onChangePassword}/>
             <button className='LoginButtons' onClick={onClickLogin}>Логин</button>
             <ButtonNavigate class='LoginButtons' name='Регистрация' value='/register'></ButtonNavigate>
             {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/chat" replace={true} />}

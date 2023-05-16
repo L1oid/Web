@@ -32,6 +32,11 @@ class User extends Store {
         }
     }
 
+    exit() {
+        localStorage.removeItem('MyStudyOrganaizedUserToken');
+        localStorage.removeItem('MyStudyOrganaizedUserLogin');
+    }
+
     authQuery() {
         return new Promise( (resolve) => {
             let status;

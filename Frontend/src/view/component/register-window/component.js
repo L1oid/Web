@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Navigate } from "react-router-dom";
 
-import './component.css';
 import Input from '../../component/Input/component.js';
 import ButtonNavigate from '../../component/button-navigate/component';
-
 import { UserFactory } from '../../../domain/service.js'
+
+import './component.css';
 
 const user = UserFactory.createInstance();
 
@@ -16,18 +16,6 @@ function RegisterWindow() {
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState('');
     const [message, setMessage] = useState('');
-
-    function onChangeLogin(login) {
-        setLogin(login);
-    }
-
-    function onChangePassword(password) {
-        setPassword(password);
-    }
-
-    function onChangeEmail(email) {
-        setEmail(email);
-    }
 
     async function onClickRegister() {
         user.setUser(login, password, email);
@@ -51,9 +39,9 @@ function RegisterWindow() {
     return (
         <div className='RegisterWindow'>
             <text className='RegisterText'>Регистрация</text>
-            <Input type="login" placeholder="Логин" getValue={onChangeLogin}/>
-            <Input type="password" placeholder="Пароль" getValue={onChangePassword}/>
-            <Input type="email" placeholder="Электронная почта" getValue={onChangeEmail}/>
+            <Input class="RegisterInput" type="login" placeholder="Логин" getValue={setLogin}/>
+            <Input class="RegisterInput" type="password" placeholder="Пароль" getValue={setPassword}/>
+            <Input class="RegisterInput" type="email" placeholder="Электронная почта" getValue={setEmail}/>
             <button className='RegisterButtons' onClick={onClickRegister}>Регистрация</button>
             <ButtonNavigate class='RegisterButtons' name='Назад' value='/login'></ButtonNavigate>
             {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/login" replace={true} />}
