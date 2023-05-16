@@ -10,7 +10,6 @@ import './component.css';
 function ButtonsMenu(props) {
 
     let login = useLoginListener();
-    console.log(login);
     const [status, setStatus] = useState('');
 
     function onClickExit() {

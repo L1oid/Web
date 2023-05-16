@@ -86,6 +86,7 @@ class UserFactory {
 class Product extends Store {
     constructor() {
         super();
+        this.user = UserFactory.createInstance();
         this.product = {
             name: undefined,
             price: undefined,
@@ -103,11 +104,11 @@ class Product extends Store {
         }
     }
 
-    getList(login) {
+    getList() {
         return new Promise( (resolve) => {
             let status;
             fetch('http://localhost:8080/server/api/product/list',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login}})
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : localStorage.getItem('MyStudyOrganaizedUserLogin')}})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -122,11 +123,11 @@ class Product extends Store {
         });
     }
 
-    getSortedListByDate(login) {
+    getSortedListByDate() {
         return new Promise( (resolve) => {
             let status;
             fetch('http://localhost:8080/server/api/product/sorted_list_by_date',{method: 'GET', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login}})
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : localStorage.getItem('MyStudyOrganaizedUserLogin')}})
             .then( (response) => { 
                 status = response.status;
                 return response.json()
@@ -141,11 +142,11 @@ class Product extends Store {
         });
     }
 
-    delete(deleteButtonValue, login) {
+    delete(deleteButtonValue) {
         return new Promise( (resolve) => {
             let status;
             fetch('http://localhost:8080/server/api/product/delete',{method: 'DELETE', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login,
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : localStorage.getItem('MyStudyOrganaizedUserLogin'),
             'Delete-row': parseInt(deleteButtonValue)}})
             .then( (response) => { 
                 status = response.status;
@@ -161,11 +162,11 @@ class Product extends Store {
         });
     }
 
-    add(login) {
+    add() {
         return new Promise( (resolve) => {
             let status;
             fetch('http://localhost:8080/server/api/product/add',{method: 'POST', headers: {'Content-Type': 'application/json;charset=utf-8',
-            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : login}, body: JSON.stringify(this.product)})
+            'token': localStorage.getItem('MyStudyOrganaizedUserToken'), 'login' : localStorage.getItem('MyStudyOrganaizedUserLogin')}, body: JSON.stringify(this.product)})
             .then( (response) => { 
                 status = response.status;
                 return response.json()

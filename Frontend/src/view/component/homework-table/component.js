@@ -28,13 +28,14 @@ class Component extends React.Component {
 
     async getList() {
         let product = ProductFactory.createInstance();
-        let result = await product.getList("GARMADON");
+        let result = await product.getList();
         if (result.status === 200) {
             this.setState({result: result});
         }
         else {
             this.setState({status: "Error"});
             localStorage.removeItem('MyStudyOrganaizedUserToken');
+            localStorage.removeItem('MyStudyOrganaizedUserLogin');
         }
     }
 
@@ -61,13 +62,14 @@ class Component extends React.Component {
     async onClickSorted() {
         let product = ProductFactory.createInstance();
         if (this.state.sorted_status === false) {
-            let result = await product.getSortedListByDate("GARMADON");
+            let result = await product.getSortedListByDate();
             if (result.status === 200) {
                 this.setState({result: result});
             }
             else {
                 this.setState({status: "Error"});
                 localStorage.removeItem('MyStudyOrganaizedUserToken');
+                localStorage.removeItem('MyStudyOrganaizedUserLogin');
             }
             this.setState({sorted_status: true});
         }
@@ -80,39 +82,43 @@ class Component extends React.Component {
     async onClickAdd() {
         let product = ProductFactory.createInstance();
         product.setProduct(this.state.subject, this.state.subject_status, this.state.exercise, this.state.date);
-        let result = await product.add("GARMADON");
+        let result = await product.add();
         if (result.status === 200) {
-            let result = await product.getList("GARMADON");
+            let result = await product.getList();
             if (result.status === 200) {
                 this.setState({result: result});
             }
             else {
                 this.setState({status: "Error"});
                 localStorage.removeItem('MyStudyOrganaizedUserToken');
+                localStorage.removeItem('MyStudyOrganaizedUserLogin');
             }
         }
         else if (result.status === 401) {
             this.setState({status: "Error"});
             localStorage.removeItem('MyStudyOrganaizedUserToken');
+            localStorage.removeItem('MyStudyOrganaizedUserLogin');
         }
     }
 
     async onClickDelete(id) {
         let product = ProductFactory.createInstance();
-        let result = await product.delete(id, "GARMADON");
+        let result = await product.delete(id);
         if (result.status === 200) {
-            let result = await product.getList("GARMADON");
+            let result = await product.getList();
             if (result.status === 200) {
                 this.setState({result: result});
             }
             else {
                 this.setState({status: "Error"});
                 localStorage.removeItem('MyStudyOrganaizedUserToken');
+                localStorage.removeItem('MyStudyOrganaizedUserLogin');
             }
         }
         else if (result.status === 401) {
             this.setState({status: "Error"});
             localStorage.removeItem('MyStudyOrganaizedUserToken');
+            localStorage.removeItem('MyStudyOrganaizedUserLogin');
         }
     }
 
