@@ -25,6 +25,22 @@ table td {
 	background-color: #d4d4d4;
 }
 
+.TableSelect {
+	width: 100%;
+	background-color: #4682B4;
+	border: solid #4682B4;
+	border-radius: 4px;
+	font-family: arial;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.TableOption {
+	font-family: arial;
+	font-weight: bold;
+	font-size: 16px;
+}
+
 .TableButton {
 	width: 100%;
 	background-color: #4682B4;

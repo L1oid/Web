@@ -78,6 +78,16 @@ function HomeworkTable() {
         }
     }
 
+    function subjectStatusInWord(status) {
+        if (status === 1) {
+            return "Ожидание"
+        } else if (status === 2) {
+            return "Выполненно"
+        } else if (status === 3) {
+            return "В процессе"
+        }
+    }
+
     return (
         <table>
             <tr>
@@ -93,7 +103,13 @@ function HomeworkTable() {
                 <td><Input class="TableInput" type="text" getValue={setDate}/></td>
                 <td><Input class="TableInput" type="text" getValue={setSubject}/></td>
                 <td><Input class="TableInput" type="text" getValue={setExercise}/></td>
-                <td><Input class="TableInput" type="text" getValue={setSubjectStatus}/></td>
+                <td>
+                    <select className="TableSelect" onChange={(event) => setSubjectStatus(event.target.value)}>
+                        <option className="TableOption" value='1'>Ожидание</option>
+                        <option className="TableOption" value='2'>Выполненно</option>
+                        <option className="TableOption" value='3'>В процессе</option>
+                    </select>
+                </td>
                 <td><button className="TableButton" onClick={onClickAdd}>Добавить</button></td>
             </tr>
             {
@@ -103,7 +119,7 @@ function HomeworkTable() {
                         <td>{row.date}</td>
                         <td>{row.name}</td>
                         <td>{row.description}</td>
-                        <td>{row.price}</td>
+                        <td>{subjectStatusInWord(row.price)}</td>
                         <td><button className="TableButton" onClick={onClickDelete.bind(this, row.id)}>Удалить</button></td>
                     </tr>
                 )
