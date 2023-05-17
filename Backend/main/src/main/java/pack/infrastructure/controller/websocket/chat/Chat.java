@@ -1,4 +1,4 @@
-package pack.infrastructure.websocket.chat;
+package pack.infrastructure.controller.websocket.chat;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,40 +15,41 @@ import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
 
 import pack.application.chat.api.Chatable;
+import pack.application.chat.api.MessageSendable;
 import pack.application.chat.impl.dto.Message;
 
 @ServerEndpoint(value = "/chat/{username}", decoders = MessageDecoder.class, encoders = MessageEncoder.class)
-public class Chat {
+public class Chat implements Chatable {
     private Session session;
     private static Set<Chat> chatServices = new CopyOnWriteArraySet<>();
     private static HashMap<String, String> users = new HashMap<>();
  
     @Inject
-    Chatable chat;
+    MessageSendable messageSend;
 
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) throws IOException, EncodeException{
         this.session = session;
         chatServices.add(this);
         users.put(session.getId(), username);
-        Message message = chat.getHelloMessage(username);
+        Message message = messageSend.getHelloMessage(username);
         broadcast(message);
     }
 
     @OnMessage
     public void onMessage(Session session, Message message) throws IOException, EncodeException{
-        Message newMessage = chat.getUserMessage(message.getText(), users.get(session.getId()));
+        Message newMessage = messageSend.getUserMessage(message.getText(), users.get(session.getId()));
         broadcast(newMessage);
     }
 
     @OnClose
     public void onClose(Session session){
         chatServices.remove(this);
-        Message message = chat.getGoodbyeMessage(users.get(session.getId()));
+        Message message = messageSend.getGoodbyeMessage(users.get(session.getId()));
         broadcast(message);
     }   
 
-    public static void broadcast(Message message){
+    public void broadcast(Message message) {
         chatServices.forEach(chat -> {
             synchronized (chat) {
                 try {

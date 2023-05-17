@@ -1,9 +1,9 @@
 package pack.application.chat.impl;
 
 import pack.application.chat.impl.dto.Message;
-import pack.application.chat.api.Chatable;
+import pack.application.chat.api.MessageSendable;
 
-public class Chat implements Chatable {
+public class UseMessage implements MessageSendable {
     @Override
     public Message getUserMessage(String text, String username) {
         Message message = new Message();

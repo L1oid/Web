@@ -16,20 +16,23 @@ import jakarta.ejb.TimerService;
 import jakarta.enterprise.concurrent.ManagedExecutorService;
 import jakarta.inject.Inject;
 
-import pack.application.chat.api.Chatable;
+import pack.application.chat.api.Sendable;
+import pack.application.chat.api.MessageSendable;
 import pack.application.product.api.Dateable;
 import pack.infrastructure.builder.Built;
-import pack.infrastructure.websocket.chat.Chat;
 
 @Singleton
 @Startup
 public class Timer {
     
-    @Inject
-    Chatable chat;
+    @Inject @Built
+    Sendable send;
 
     @Inject @Built
     Dateable model;
+
+    @Inject
+    MessageSendable messageSend;
 
     @Resource
     TimerService tservice; 
@@ -43,7 +46,7 @@ public class Timer {
     public void timeout() {
         try {
             String date = model.getDiffDays();
-            Chat.broadcast(chat.getUserMessage("Дней до ближайшего дедлайна: " + date, "Система")); 
+            send.broadcast(messageSend.getUserMessage("Дней до ближайшего дедлайна: " + date, "Система")); 
         } catch (Exception ex) {}
     } 
 }

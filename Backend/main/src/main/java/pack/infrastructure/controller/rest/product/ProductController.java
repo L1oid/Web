@@ -1,4 +1,4 @@
-package pack.infrastructure.controller.product;
+package pack.infrastructure.controller.rest.product;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.GET;

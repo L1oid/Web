@@ -1,4 +1,4 @@
-package pack.controller.path.user;
+package pack.infrastructure.controller.rest.user;
 
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.POST;

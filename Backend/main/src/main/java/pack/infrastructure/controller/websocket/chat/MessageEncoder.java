@@ -1,4 +1,4 @@
-package pack.infrastructure.websocket.chat;
+package pack.infrastructure.controller.websocket.chat;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
