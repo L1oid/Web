@@ -48,5 +48,5 @@ public class Timer {
             String date = model.getDiffDays();
             send.broadcast(messageSend.getUserMessage("Дней до ближайшего дедлайна: " + date, "Система")); 
         } catch (Exception ex) {}
-    } 
+    }
 }
