@@ -30,20 +30,23 @@ public class DateRepository implements DateRepositable {
 	    }
         try {
             entityManager.joinTransaction();
-            String date = "Дата отсутствует";
             List<EProduct> eProducts = entityManager.createQuery("SELECT p FROM EProduct p ORDER BY p.date ASC", EProduct.class).getResultList();
-            for(EProduct eProduct : eProducts) {
-                date = eProduct.getDate();
-                break;
-            }
             String days = "0";
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-                Date dateEx = sdf.parse(date);
-                Date dateNow = sdf.parse(sdf.format(new Date()));
-                days = String.valueOf(TimeUnit.DAYS.convert(Math.abs(dateEx.getTime() - dateNow.getTime()), TimeUnit.MILLISECONDS));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            for(EProduct eProduct : eProducts) {
+                String date = eProduct.getDate();
+                int status = eProduct.getPrice();
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+                    Date dateEx = sdf.parse(date);
+                    Date dateNow = sdf.parse(sdf.format(new Date()));
+                    long temp = TimeUnit.DAYS.convert(dateEx.getTime() - dateNow.getTime(), TimeUnit.MILLISECONDS);
+                    if (temp > 0 & status != 2) {
+                        days = String.valueOf(temp);
+                        break;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             return days;
         } catch(Exception ex) {
