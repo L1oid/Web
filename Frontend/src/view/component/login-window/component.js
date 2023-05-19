@@ -51,13 +51,13 @@ function LoginWindow(props) {
 
     return (
         <div className='LoginWindow'>
-            <text className='LoginText'>My Study Organaized</text>
+            <label className='LoginText'>My Study Organaized</label>
             <Input class='LoginInput' type="login" placeholder="Логин" getValue={onChangeLogin}/>
             <Input class='LoginInput' type="password" placeholder="Пароль" getValue={onChangePassword}/>
             <button className='LoginButtons' onClick={onClickLogin}>Логин</button>
             <ButtonNavigate class='LoginButtons' name='Регистрация' value='/register'></ButtonNavigate>
-            {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/chat" replace={true} />}
-            {status === "Error" && <text className='MessageText'>{message}</text>}
+            {status === "Ok" && <label className='MessageText'>{message}</label> && <Navigate to="/chat" replace={true} />}
+            {status === "Error" && <label className='MessageText'>{message}</label>}
         </div>
     )
 }

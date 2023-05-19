@@ -38,14 +38,14 @@ function RegisterWindow() {
 
     return (
         <div className='RegisterWindow'>
-            <text className='RegisterText'>Регистрация</text>
+            <label className='RegisterText'>Регистрация</label>
             <Input class="RegisterInput" type="login" placeholder="Логин" getValue={setLogin}/>
             <Input class="RegisterInput" type="password" placeholder="Пароль" getValue={setPassword}/>
             <Input class="RegisterInput" type="email" placeholder="Электронная почта" getValue={setEmail}/>
             <button className='RegisterButtons' onClick={onClickRegister}>Регистрация</button>
             <ButtonNavigate class='RegisterButtons' name='Назад' value='/login'></ButtonNavigate>
-            {status === "Ok" && <text className='MessageText'>{message}</text> && <Navigate to="/login" replace={true} />}
-            {status === "Error" && <text className='MessageText'>{message}</text>}
+            {status === "Ok" && <label className='MessageText'>{message}</label> && <Navigate to="/login" replace={true} />}
+            {status === "Error" && <label className='MessageText'>{message}</label>}
         </div>
     )
 }

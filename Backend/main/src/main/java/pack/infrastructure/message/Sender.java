@@ -53,7 +53,7 @@ public class Sender implements Authorizable, Tokenable {
             message.setStringProperty("password", password);
             message.setStringProperty("email", email);
             producer.send(queueAuth, message);
-            Message newMessage = consumer.receive(); 
+            Message newMessage = consumer.receive();
             Boolean status = newMessage.getBooleanProperty("status");
             context.close();
             return status;

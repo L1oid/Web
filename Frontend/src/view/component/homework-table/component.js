@@ -90,6 +90,7 @@ function HomeworkTable() {
 
     return (
         <table>
+            <tbody>
             <tr>
                 <th>ID</th>
                 <th><button className="TableButton" onClick={onClickSorted}>Дата</button></th>
@@ -113,8 +114,8 @@ function HomeworkTable() {
                 <td><button className="TableButton" onClick={onClickAdd}>Добавить</button></td>
             </tr>
             {
-                result.data.map((row) =>
-                    <tr>
+                result.data.map((row, index) =>
+                    <tr key={index}>
                         <td>{row.id}</td>
                         <td>{row.date}</td>
                         <td>{row.name}</td>
@@ -125,6 +126,7 @@ function HomeworkTable() {
                 )
             }
             {status === "Error" && <Navigate to="/login" replace={true} />}
+            </tbody>
         </table>
     )
 }
