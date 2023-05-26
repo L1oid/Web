@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navigate } from "react-router-dom";
 
 import { useLoginListener } from '../../../state/redux/api.js';
-import { UserFactory } from '../../../domain/service.js'
+import { UserFactory } from '../../../transport/service.js'
 import ButtonNavigate from '../button-navigate/component.js';
 
 import './component.css';

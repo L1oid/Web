@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import Input from '../../component/Input/component.js';
 import ButtonNavigate from '../../component/button-navigate/component';
-import { UserFactory } from '../../../domain/service.js'
+import { UserFactory } from '../../../transport/service.js'
 
 import './component.css';
 

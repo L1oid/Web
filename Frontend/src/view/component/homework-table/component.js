@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 import Input from '../Input/component.js';
-import { ProductFactory, UserFactory } from '../../../domain/service.js'
+import { ProductFactory, UserFactory } from '../../../transport/service.js'
 
 import './component.css';
 

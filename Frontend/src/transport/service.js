@@ -50,6 +50,8 @@ class User extends Store {
                     status: status,
                     data: data
                 }
+                localStorage.setItem('MyStudyOrganaizedUserToken', result.data);
+                localStorage.setItem('MyStudyOrganaizedUserLogin', this.user.login)
                 resolve(result);            
             });
         });

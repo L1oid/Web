@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-import { ChatFactory } from "../../../domain/service.js";
+import { ChatFactory } from "../../../transport/service.js";
 import { useLoginListener } from '../../../state/redux/api.js';
 
 import './component.css';

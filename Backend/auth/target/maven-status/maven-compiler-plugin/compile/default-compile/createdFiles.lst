@@ -8,7 +8,6 @@ pack\application\auth\service\api\Authorizable.class
 pack\infrastructure\repository\user\UserRepository.class
 pack\application\token\TokenIssuer.class
 pack\infrastructure\message\Listener.class
-pack\infrastructure\config\Filter.class
 pack\application\auth\service\impl\dto\User.class
 pack\application\token\TokenValidator.class
 pack\infrastructure\message\Sender.class

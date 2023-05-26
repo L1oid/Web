@@ -3,14 +3,14 @@ import { Navigate } from "react-router-dom";
 
 import Input from '../../component/Input/component.js';
 import ButtonNavigate from '../../component/button-navigate/component.js';
-import { UserFactory } from '../../../domain/service.js'
+import { UserFactory } from '../../../transport/service.js'
 import { useLoginDispatcher } from '../../../state/redux/api.js';
 
 import './component.css';
 
 const user = UserFactory.createInstance();
 
-function LoginWindow(props) {
+function LoginWindow() {
 
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
@@ -32,8 +32,6 @@ function LoginWindow(props) {
         user.setUser(login, password, undefined);
         let result = await user.authQuery();
         if (result.status === 200) {
-            localStorage.setItem('MyStudyOrganaizedUserToken', result.data);
-            localStorage.setItem('MyStudyOrganaizedUserLogin', login)
             setStatus("Ok");
             setMessage("Авторизован! Пожалуйста, дождитесь ответа...")
         }
